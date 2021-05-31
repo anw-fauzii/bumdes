@@ -20,7 +20,8 @@ class KabupatenController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                           $btn = '<a href="'.route('kabupaten.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKabupaten"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                           $btn = '<a href="'.route('kecamatan.show', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                           $btn = $btn.'<a href="'.route('kabupaten.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKabupaten"><i class="metismenu-icon pe-7s-pen"></i></a>';
                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKabupaten"><i class="metismenu-icon pe-7s-trash"></i></a>';
     
                             return $btn;

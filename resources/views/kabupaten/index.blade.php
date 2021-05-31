@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover table-jenis">
+                            <table class="table table-striped table-hover table-kabupaten">
                                 <thead>
                                     <tr class="text-center">
                                         <th width="15%">No</th>
