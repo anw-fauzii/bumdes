@@ -53,11 +53,15 @@ class KecamatanController extends Controller
     {
         $kabupaten = Kabupaten::findOrFail($id);
         if ($request->ajax()) {
-            $data = Kecamatan::where('kabupaten_id', "$id")->get();
+            $data = Kecamatan::with('bumdes')->where('kabupaten_id', "$id")->get();
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('jumlah', function($data) {
+                        return $data->bumdes->count();
+                     })
                     ->addColumn('action', function($row){
-                           $btn = '<a href="'.route('kecamatan.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                           $btn = '<a href="'.route('bumdes.show', $row->id).'" data-toggle="tooltip" title="Lihat Bumdes" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editKecamatan"><i class="metismenu-icon pe-7s-info"></i></a>';
+                           $btn = $btn. ' <a href="'.route('kecamatan.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKecamatan"><i class="metismenu-icon pe-7s-trash"></i></a>';
     
                             return $btn;

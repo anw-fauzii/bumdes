@@ -12,4 +12,8 @@ class JenisUsaha extends Model
     protected $fillable = [
         'nama'
     ];
+
+    public function bumdes(){
+        return $this->belongsToMany(ProfilBumdes::class);
+    }
 }

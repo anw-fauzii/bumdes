@@ -42,7 +42,6 @@ $(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });  
-    
 //Tabel Kabupaten
     var tableKabupaten = $('.table-kabupaten').DataTable({
         processing: true,
@@ -54,6 +53,7 @@ $(function () {
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'nama', name: 'nama'},
+            {data: 'jumlah', render: function(data, row, row){return data +' Bumdes';}, name: 'jumlah'},
             {data: 'lat', name: 'lat'},
             {data: 'long', name: 'long'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

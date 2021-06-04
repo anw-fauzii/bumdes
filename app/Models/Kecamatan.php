@@ -12,4 +12,8 @@ class Kecamatan extends Model
     protected $fillable = [
         'kabupaten_id', 'nama', 'lat', 'long'
     ];
+
+    public function bumdes(){
+        return $this->hasMany(ProfilBumdes::class,'kecamatan_id', 'id');
+    }
 }

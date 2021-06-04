@@ -23,8 +23,11 @@
         <div class="col-md-12">
             <div class="mb-3 card">
                 <div class="card-header-tab card-header-tab-animation card-header">
-                    <div class="card-header-title">
-                    <a class="btn btn-success" href="{{route('kecamatan.create', $kabupaten->id)}}"><i class="metismenu-icon pe-7s-note"></i> Tambah Kecamatan</a>
+                    <div class="btn-actions-pane-left">
+                    <a class="btn btn-danger" href="{{route('kabupaten.index')}}"><i class="metismenu-icon pe-7s-prev"></i> Kembali</a>        
+                    </div>
+                    <div class="btn-actions-pane-right">
+                    <a class="btn btn-success" href="{{route('kecamatan.create', $kabupaten->id)}}"><i class="metismenu-icon pe-7s-note"></i> Tambah Kecamatan</a>        
                     </div>
                 </div>
                 <div class="card-body">
@@ -33,10 +36,11 @@
                             <table class="table table-striped table-hover table-kecamatan">
                                 <thead>
                                     <tr class="text-center">
-                                        <th width="15%">No</th>
+                                        <th width="10%">No</th>
                                         <th width="20%">Kecamatan</th>
-                                        <th width="25%">Latitude</th>
-                                        <th width="25%">Longitude</th>
+                                        <th width="15%">Total</th>
+                                        <th width="20%">Latitude</th>
+                                        <th width="20%">Longitude</th>
                                         <th width="15%">Aksi</th>
                                     </tr>
                                 </thead>

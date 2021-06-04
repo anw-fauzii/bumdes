@@ -33,10 +33,11 @@
                             <table class="table table-striped table-hover table-kabupaten">
                                 <thead>
                                     <tr class="text-center">
-                                        <th width="15%">No</th>
+                                        <th width="10%">No</th>
                                         <th width="20%">Kabupaten</th>
-                                        <th width="25%">Latitude</th>
-                                        <th width="25%">Longitude</th>
+                                        <th width="15%">Total</th>
+                                        <th width="20%">Latitude</th>
+                                        <th width="20%">Longitude</th>
                                         <th width="15%">Aksi</th>
                                     </tr>
                                 </thead>

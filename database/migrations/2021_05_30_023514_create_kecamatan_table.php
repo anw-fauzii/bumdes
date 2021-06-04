@@ -19,6 +19,7 @@ class CreateKecamatanTable extends Migration
             $table->integer('kabupaten_id')->unsigned();
             $table->string('lat');
             $table->string('long');
+            $table->timestamps();
 
             $table->foreign('kabupaten_id')->references('id')->on('kabupaten')->onDelete('cascade');
         });
