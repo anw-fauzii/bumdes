@@ -42,6 +42,10 @@
                                                 <div class="col-sm-8"><input placeholder="Masukan Nama Bumdes" type="text" name="nama" value="{{ old('nama') }}" class="form-control">
                                                     </div>
                                             </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Email</label>
+                                                <div class="col-sm-8"><input placeholder="Masukan Email" type="text" name="email" value="{{ old('email') }}" class="form-control">
+                                                    </div>
+                                            </div>
                                             <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Alamat</label>
                                                 <div class="col-sm-8"><input placeholder="Masukan Alamat" type="text" name="alamat" value="{{ old('alamat') }}" class="form-control">
                                                     </div>

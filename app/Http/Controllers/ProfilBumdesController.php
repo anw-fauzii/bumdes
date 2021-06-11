@@ -6,8 +6,10 @@ use App\Models\ProfilBumdes;
 use App\Models\JenisUsahaBumdes;
 use App\Models\JenisUsaha;
 use App\Models\Kecamatan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Hash;
 
 class ProfilBumdesController extends Controller
 {
@@ -56,8 +58,16 @@ class ProfilBumdesController extends Controller
         $bumdes->save();
         $bumdes->jenis()->attach($request->jenis_id);
 
-        $kecamatan = Kecamatan::find($request->get('kecamatan_id'));
+        $id_bumdes = ProfilBumdes::max('id');
+        $user = new User;
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->password = Hash::make("12345678");
+        $user->profil_bumdes_id = "$id_bumdes";
+        $user->assignRole('bumdes');
+        $user->save();
 
+        $kecamatan = Kecamatan::find($request->get('kecamatan_id'));
 
         return redirect()->route('bumdes.show', $kecamatan)->with('sukses','Bumdes Berhasil Disimpan');
     }

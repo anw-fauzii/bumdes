@@ -7,7 +7,7 @@
             <div class="modal-body">
                 <form id="shuFormCreate" name="shuFormCreate" class="form-horizontal">
                     <input type="hidden" name="shu_id" id="shu_id">
-                    <input type="hidden" name="bumdes_id" id="bumdes_id" value="3">
+                    <input type="hidden" name="bumdes_id" id="bumdes_id" value="{{Auth::user()->profil_bumdes_id}}">
                     <div class="form-group">
                         <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nilai</label>
                             <div class="col-sm-9"><input placeholder="Masukan Nilai" id="nilai" type="text" name="nilai" value="{{ old('nilai') }}" class="form-control">

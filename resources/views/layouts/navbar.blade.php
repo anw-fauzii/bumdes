@@ -58,10 +58,10 @@
                                 </div>
                                 <div class="widget-content-right ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        <strong>{{ Auth::user()->nama }}</strong>
+                                        <strong>{{ Auth::user()->name }}</strong>
                                     </div>
                                     <div class="widget-subheading">
-                                        {{ Auth::user()->id }}    
+                                        {{ Auth::user()->email }}    
                                     </div>
                                 </div>
                             </div>

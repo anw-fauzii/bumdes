@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shu;
+use App\Models\Kecamatan;
+use App\Models\Kabupaten;
 use App\Models\ProfilBumdes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use DataTables;
 
 class ShuController extends Controller
@@ -14,11 +17,41 @@ class ShuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $namaKab = Kabupaten::pluck('nama', 'id');
+        $kabupaten = $request->get('namaKab');
+        $kecamatan = $request->get('namaKec');
+        $tahun = $request->get('tahun');
+        $bulan = $request->get('bulan');
+        if (!empty($kabupaten) && !empty($kecamatan) && !empty($tahun) && !empty($bulan)){
+            $shu = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->get();
+            $nilai = Shu::select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->sum("nilai");
+            $jumlah = Shu::select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
+        }
+        elseif (!empty($kabupaten)){
+            $shu = ProfilBumdes::with('shu')->where('kabupaten_id', "$kabupaten")->get();
+        }
+        elseif (!empty($kecamatan)){
+            $shu = ProfilBumdes::where('kecamatan_id', "$kecamatan")->get();
+        }
+        else{
+            $shu = Shu::All();
+            $nilai = "0";
+            $jumlah = "0";
+        }
+        return view('shu.show', compact('namaKab','shu','nilai','jumlah'));
     }
 
+    public function cari($id)
+    {
+        $namaKec = Kecamatan::where('kabupaten_id', "$id")
+            ->pluck('nama', 'id');
+            return json_encode($namaKec);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -42,7 +75,7 @@ class ShuController extends Controller
             [
                 'bumdes_id' => $request->bumdes_id,
                 'nilai' => $request->nilai,
-                'tanggal' => $request->tanggal
+                'tanggal' => Carbon::parse($request->tanggal)->format('d-m-Y'),
             ]
         );
         return response()->json($shu);

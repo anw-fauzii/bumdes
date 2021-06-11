@@ -14,4 +14,8 @@ class Shu extends Model
         'nilai',
         'tanggal'
     ];
+
+    public function bumdes(){
+        return $this->belongsTo(ProfilBumdes::class);
+    }
 }

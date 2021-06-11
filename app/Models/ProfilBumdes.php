@@ -30,4 +30,12 @@ class ProfilBumdes extends Model
     public function jenis(){
         return $this->belongsToMany(JenisUsaha::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function shu(){
+        return $this->belongsTo(Shu::class);
+    }
 }
