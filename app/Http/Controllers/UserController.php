@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\ProfilBumdes;
+use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use DataTables;
 
 class UserController extends Controller
@@ -82,7 +85,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return response()->json($user);
+        return view('user.edit');
     }
 
     /**
@@ -92,9 +95,16 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'old_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'confirm_password' => ['same:new_password']
+        ]);
+        User::find(Auth::user()->id)->update(['password' => Hash::make($request->new_password)]);
+        $id_user = ProfilBumdes::find(Auth::user()->profil_bumdes_id);
+        return view('profil', $id_user);
     }
 
     /**

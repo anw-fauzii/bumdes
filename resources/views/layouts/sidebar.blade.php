@@ -79,9 +79,15 @@
                     </a>
                 </li>   
                 <li>
-                    <a href="{{ route('bumdes.edit', Auth::user()->profil_bumdes_id) }}">
+                    <a href="{{ route('profil', Auth::user()->profil_bumdes_id) }}">
                         <i class="metismenu-icon pe-7s-user"></i>
                             Profil
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('user.edit', Auth::user()->profil_bumdes_id) }}">
+                        <i class="metismenu-icon pe-7s-settings"></i>
+                            Akun
                     </a>
                 </li>
                 @endrole

@@ -8,21 +8,22 @@ use App\Models\JenisUsaha;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\User;
+use App\Models\Shu;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     
     public function index()
     {
-        $year = ['2015','2016','2017','2018','2019','2020','2021'];
-
-        $user = [];
-        foreach ($year as $key => $value) {
-            $user[] = User::where(\DB::raw("DATE_FORMAT(created_at, '%Y')"),$value)->count();
-        }
-
-    	return view('dashboard')->with('year',json_encode($year,JSON_NUMERIC_CHECK))->with('user',json_encode($user,JSON_NUMERIC_CHECK));
+        $userData = Shu::where('bumdes_id', Auth::user()->profil_bumdes_id)->selectRaw('SUM(nilai) as total')
+                    ->groupByRaw('MONTH(created_at)')
+                    ->pluck('total');
+        $bulan = Shu::where('bumdes_id', Auth::user()->profil_bumdes_id)->selectRaw('MONTH(created_at) as bulan')
+                    ->groupByRaw('MONTH(created_at)')
+                    ->pluck('bulan');    
+    	return view('dashboard',compact('userData','bulan'));
     }
 
     public function home(Request $request){

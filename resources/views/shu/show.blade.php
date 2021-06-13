@@ -12,9 +12,7 @@
                 <div class="page-title-icon">
                     <i class="pe-7s-cash icon-gradient bg-mean-fruit"></i>
                 </div>
-                <div>Sisa Hasil Usaha
-                    <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
-                    </div>
+                <div><h3>Sisa Hasil Usaha</h3>
                 </div>
             </div>  
         </div> 
@@ -146,7 +144,9 @@
                                 </div>
                             </div>
                         </div>
-                            <table id="example" class="table table-striped table-hover">
+                        <div class="mt-4">
+                        
+                        <table id="example" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -167,6 +167,8 @@
                                 </tbody>
                                 @endforeach
                             </table>
+                        </div>
+                        </div>
                     </div>
                 </div> 
             </div>

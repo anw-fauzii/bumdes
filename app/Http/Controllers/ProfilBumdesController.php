@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class ProfilBumdesController extends Controller
 {
@@ -18,9 +19,13 @@ class ProfilBumdesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function profil()
     {
-        //
+        $jenis =[];
+        $id = Auth::user()->profil_bumdes_id;
+        $bumdes = ProfilBumdes::find("$id");
+        $jenis = $bumdes->jenis->pluck('nama')->toArray();
+        return view('bumdes.show', compact('bumdes','jenis'));
     }
 
     /**
@@ -124,10 +129,52 @@ class ProfilBumdesController extends Controller
     public function update(Request $request, $id)
     {
         $bumdes = ProfilBumdes::findOrFail($id);
-        $bumdes->update($request->all());
-        $bumdes->jenis()->detach($request->jenis_id);
-        $kecamatan = Kecamatan::find($request->get('kecamatan_id'));
-        return redirect()->route('bumdes.show', $kecamatan)->with('sukses','Bumdes Berhasil Dipdate');
+        $bumdes->nama = $request->get('nama');
+        $bumdes->kabupaten_id = $request->get('kabupaten_id');
+        $bumdes->kecamatan_id = $request->get('kecamatan_id');
+        $bumdes->alamat = $request->get('alamat');
+        $bumdes->desa = $request->get('desa');
+        $bumdes->telepon = $request->get('telepon');
+        $bumdes->lat = $request->get('lat');
+        $bumdes->long = $request->get('long');
+        if($request->file('foto1')){
+            if($bumdes->foto1 && file_exists(storage_path('app/public/' . $bumdes->foto1))){
+                \Storage::delete('public/'.$bumdes->foto1);
+                }
+            $file1 = $request->file('foto1')->store('Foto', 'public');
+            $bumdes->foto1 = $file1;
+        }
+        if($request->file('foto2')){
+            if($bumdes->foto2 && file_exists(storage_path('app/public/' . $bumdes->foto2))){
+                \Storage::delete('public/'.$bumdes->foto2);
+                }
+            $file1 = $request->file('foto2')->store('Foto', 'public');
+            $bumdes->foto2 = $file1;
+        }            
+        if($request->file('foto3')){
+            if($bumdes->foto3 && file_exists(storage_path('app/public/' . $bumdes->foto3))){
+                \Storage::delete('public/'.$bumdes->foto3);
+                }
+            $file1 = $request->file('foto3')->store('Foto', 'public');
+            $bumdes->foto3 = $file1;
+        } 
+        $bumdes->save();
+        $id_user = Auth::user()->id;
+        $user=User::findOrFail("$id_user");
+        if($request->file('logo')){
+            if($user->profile_photo_path && file_exists(storage_path('app/public/' . $user->profile_photo_path))){
+                \Storage::delete('public/'.$user->logo);
+                }
+            $file1 = $request->file('logo')->store('Logo', 'public');
+            $user->profile_photo_path = $file1;
+        } 
+        $user->save();
+        if(isset($request->jenis_id)){
+            $bumdes->jenis()->sync($request->jenis_id);
+        } else{
+            $bumdes->jenis()->sync(array());
+        }
+        return redirect()->route('profil', $bumdes)->with('sukses','Bumdes Berhasil Dipdate');
     }
 
     /**

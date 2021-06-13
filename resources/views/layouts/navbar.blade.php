@@ -37,23 +37,12 @@
                                 <div class="widget-content-left">                             
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="{{asset('storage/logo/user.png')}}" alt="">
-                                            <i class="pe-7s-angle-down"></i>
+                                            @if(Auth::user()->profile_photo_path == NULL)
+                                            <img width="42" class="rounded-circle" src="{{asset('storage/user.png')}}" alt="">
+                                            @else
+                                            <img width="42" class="rounded-circle" src="{{asset('storage/'. Auth::user()->profile_photo_path)}}" alt="">
+                                            @endif
                                         </a>
-                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                            <ul class="vertical-nav-menu">
-                                                <li>
-                                                    <a href="#">Ubah Password</a>
-                                                </li> 
-                                                <li>
-                                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">Logout</a>
-                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="widget-content-right ml-3 header-user-info">

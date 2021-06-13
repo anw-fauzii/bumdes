@@ -12,7 +12,7 @@
                 <div class="page-title-icon">
                     <i class="pe-7s-culture icon-gradient bg-mean-fruit"></i>
                 </div>
-                <div>Bumdes
+                <div>Edit Bumdes
                     <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
                     </div>
                 </div>
@@ -70,6 +70,22 @@
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Longitude</label>
                                                 <div class="col-sm-8"><input placeholder="Masukan Longitude" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
+                                                    </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Logo</label>
+                                                <div class="col-sm-8"><input name="logo" type="file" class="form-control-file">
+                                                    </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Foto 1</label>
+                                                <div class="col-sm-8"><input name="foto1" type="file" class="form-control-file">
+                                                    </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Foto 2</label>
+                                                <div class="col-sm-8"><input name="foto2" type="file" class="form-control-file">
+                                                    </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Foto 3</label>
+                                                <div class="col-sm-8"><input name="foto3" type="file" class="form-control-file">
                                                     </div>
                                             </div>
                                             <div class="text-center">

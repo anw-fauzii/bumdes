@@ -12,9 +12,7 @@
                 <div class="page-title-icon">
                     <i class="pe-7s-server icon-gradient bg-mean-fruit"></i>
                 </div>
-                <div>Jenis Usaha
-                    <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
-                    </div>
+                <div><h3>Jenis Usaha</h3>
                 </div>
             </div>  
         </div> 

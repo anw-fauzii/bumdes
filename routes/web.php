@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum', 'verified'])
 
 Route::resource('kabupaten', KabupatenController::class);
 Route::resource('bumdes', ProfilBumdesController::class);
+Route::get('profil/{id}',[ProfilBumdesController::class,'profil'])->name('profil');
 Route::resource('kecamatan', KecamatanController::class);
 Route::resource('user', UserController::class);
 Route::resource('shu', ShuController::class);

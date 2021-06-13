@@ -27,16 +27,26 @@ class ShuController extends Controller
         if (!empty($kabupaten) && !empty($kecamatan) && !empty($tahun) && !empty($bulan)){
             $shu = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
             ->where('kecamatan_id', "$kecamatan")->get();
+            $nilai = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->sum("nilai");
+            $jumlah = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
+        }
+        elseif (!empty($kabupaten) && !empty($kecamatan) && !empty($tahun)){
+            $shu = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->get();
+            $nilai = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->sum("nilai");
+            $jumlah = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
+        }
+        elseif (!empty($kabupaten) && !empty($kecamatan)){
+            $shu = Shu::select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+            ->where('kecamatan_id', "$kecamatan")->get();
             $nilai = Shu::select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
             ->where('kecamatan_id', "$kecamatan")->sum("nilai");
             $jumlah = Shu::select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
             ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
-        }
-        elseif (!empty($kabupaten)){
-            $shu = ProfilBumdes::with('shu')->where('kabupaten_id', "$kabupaten")->get();
-        }
-        elseif (!empty($kecamatan)){
-            $shu = ProfilBumdes::where('kecamatan_id', "$kecamatan")->get();
         }
         else{
             $shu = Shu::All();

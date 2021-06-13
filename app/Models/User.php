@@ -30,6 +30,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profil_bumdes_id',
+        'profile_photo_path'
     ];
 
     /**
@@ -61,4 +63,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function bumdes(){
+        return $this->belongsTo(ProfilBumdes::class, 'profil_bumdes_id');
+    }
+
 }

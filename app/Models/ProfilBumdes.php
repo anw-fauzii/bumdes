@@ -17,7 +17,11 @@ class ProfilBumdes extends Model
         'desa',
         'telepon',
         'lat',
-        'long'
+        'long',
+        'logo',
+        'foto1',
+        'foto2',
+        'foto3',
     ];
     public function kabupaten(){
         return $this->belongsTo(Kabupaten::class);
