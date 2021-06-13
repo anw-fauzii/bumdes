@@ -6,6 +6,7 @@ use App\Models\Kabupaten;
 use Illuminate\Http\Request;
 use App\Models\ProfilBumdes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use DataTables;
 
 class KabupatenController extends Controller
@@ -16,25 +17,30 @@ class KabupatenController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {         
-        if ($request->ajax()) {
-            $data = Kabupaten::with('bumdes')->get();
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('jumlah', function($data) {
-                           return $data->bumdes->count();
+    {
+        if (Auth::user()->hasRole('admin')){
+            if ($request->ajax()) {
+                $data = Kabupaten::with('bumdes')->get();
+                return Datatables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('jumlah', function($data) {
+                            return $data->bumdes->count();
+                            })
+                        ->addColumn('action', function($row){
+                            $btn = '<a href="'.route('kecamatan.show', $row->id).'" data-toggle="tooltip" title="Lihat Kecamatan" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editKecamatan"><i class="metismenu-icon pe-7s-info"></i></a>';
+                            $btn = $btn.' <a href="'.route('kabupaten.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKabupaten"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKabupaten"><i class="metismenu-icon pe-7s-trash"></i></a>';
+        
+                                return $btn;
                         })
-                    ->addColumn('action', function($row){
-                           $btn = '<a href="'.route('kecamatan.show', $row->id).'" data-toggle="tooltip" title="Lihat Kecamatan" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editKecamatan"><i class="metismenu-icon pe-7s-info"></i></a>';
-                           $btn = $btn.' <a href="'.route('kabupaten.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKabupaten"><i class="metismenu-icon pe-7s-pen"></i></a>';
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKabupaten"><i class="metismenu-icon pe-7s-trash"></i></a>';
-    
-                            return $btn;
-                    })
-                    ->rawColumns(['action'],['jumlah'])
-                    ->make(true);
+                        ->rawColumns(['action'],['jumlah'])
+                        ->make(true);
+            }
+            return view('kabupaten.index');
         }
-        return view('kabupaten.index');
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -44,7 +50,12 @@ class KabupatenController extends Controller
      */
     public function create()
     {
-        return view('kabupaten.create');
+        if (Auth::user()->hasRole('admin')){
+            return view('kabupaten.create');
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -55,8 +66,13 @@ class KabupatenController extends Controller
      */
     public function store(Request $request)
     {
-        $kabupaten = Kabupaten::create($request->all());
-        return redirect('kabupaten')->with('sukses','Kabupaten Berhasil Disimpan');
+        if (Auth::user()->hasRole('admin')){
+            $kabupaten = Kabupaten::create($request->all());
+            return redirect('kabupaten')->with('sukses','Kabupaten Berhasil Disimpan');
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -67,7 +83,7 @@ class KabupatenController extends Controller
      */
     public function show(Kabupaten $kabupaten)
     {
-        //
+        return response()->view('errors.404', [abort(404)], 404);
     }
 
     /**
@@ -78,8 +94,13 @@ class KabupatenController extends Controller
      */
     public function edit($id)
     {
-        $kabupaten = Kabupaten::findOrFail($id);
-        return view('kabupaten.edit',compact('kabupaten'));  
+        if (Auth::user()->hasRole('admin')){
+            $kabupaten = Kabupaten::findOrFail($id);
+            return view('kabupaten.edit',compact('kabupaten'));  
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -91,9 +112,14 @@ class KabupatenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $kabupaten = Kabupaten::findOrFail($id);
-        $kabupaten->update($request->all());
-        return redirect('kabupaten')->with('sukses','Kabupaten Berhasil Diupdate');
+        if (Auth::user()->hasRole('admin')){
+            $kabupaten = Kabupaten::findOrFail($id);
+            $kabupaten->update($request->all());
+            return redirect('kabupaten')->with('sukses','Kabupaten Berhasil Diupdate');
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -104,8 +130,13 @@ class KabupatenController extends Controller
      */
     public function destroy($id)
     {
-        $kabupaten = Kabupaten::find($id);
-        $kabupaten->delete();
-        return response()->json($kabupaten);
+        if (Auth::user()->hasRole('admin')){
+            $kabupaten = Kabupaten::find($id);
+            $kabupaten->delete();
+            return response()->json($kabupaten);
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 }

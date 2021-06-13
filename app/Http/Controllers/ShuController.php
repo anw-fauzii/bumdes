@@ -8,6 +8,7 @@ use App\Models\Kabupaten;
 use App\Models\ProfilBumdes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use DataTables;
 
 class ShuController extends Controller
@@ -19,41 +20,46 @@ class ShuController extends Controller
      */
     public function index(Request $request)
     {
-        $namaKab = Kabupaten::pluck('nama', 'id');
-        $kabupaten = $request->get('namaKab');
-        $kecamatan = $request->get('namaKec');
-        $tahun = $request->get('tahun');
-        $bulan = $request->get('bulan');
-        if (!empty($kabupaten) && !empty($kecamatan) && !empty($tahun) && !empty($bulan)){
-            $shu = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->get();
-            $nilai = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->sum("nilai");
-            $jumlah = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
-        }
-        elseif (!empty($kabupaten) && !empty($kecamatan) && !empty($tahun)){
-            $shu = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->get();
-            $nilai = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->sum("nilai");
-            $jumlah = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
-        }
-        elseif (!empty($kabupaten) && !empty($kecamatan)){
-            $shu = Shu::select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->get();
-            $nilai = Shu::select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->sum("nilai");
-            $jumlah = Shu::select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
-            ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
+        if (Auth::user()->hasRole('admin')){
+            $namaKab = Kabupaten::pluck('nama', 'id');
+            $kabupaten = $request->get('namaKab');
+            $kecamatan = $request->get('namaKec');
+            $tahun = $request->get('tahun');
+            $bulan = $request->get('bulan');
+            if (!empty($kabupaten) && !empty($kecamatan) && !empty($tahun) && !empty($bulan)){
+                $shu = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->get();
+                $nilai = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->sum("nilai");
+                $jumlah = Shu::whereYear('tanggal', "$tahun")->whereMonth('tanggal', "$bulan")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
+            }
+            elseif (!empty($kabupaten) && !empty($kecamatan) && !empty($tahun)){
+                $shu = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->get();
+                $nilai = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->sum("nilai");
+                $jumlah = Shu::whereYear('tanggal', "$tahun")->select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
+            }
+            elseif (!empty($kabupaten) && !empty($kecamatan)){
+                $shu = Shu::select('bumdes_id','tanggal','nilai')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->get();
+                $nilai = Shu::select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->sum("nilai");
+                $jumlah = Shu::select('bumdes_id')->join('profil_bumdes' ,'shu.bumdes_id','=','profil_bumdes.id')
+                ->where('kecamatan_id', "$kecamatan")->selectRaw('count(bumdes_id)')->groupBy('bumdes_id')->count();
+            }
+            else{
+                $shu = Shu::All();
+                $nilai = "0";
+                $jumlah = "0";
+            }
+            return view('shu.show', compact('namaKab','shu','nilai','jumlah'));
         }
         else{
-            $shu = Shu::All();
-            $nilai = "0";
-            $jumlah = "0";
+            return response()->view('errors.403', [abort(403)], 403);
         }
-        return view('shu.show', compact('namaKab','shu','nilai','jumlah'));
     }
 
     public function cari($id)
@@ -69,7 +75,7 @@ class ShuController extends Controller
      */
     public function create()
     {
-        //
+        return response()->view('errors.404', [abort(404)], 404);
     }
 
     /**
@@ -80,15 +86,20 @@ class ShuController extends Controller
      */
     public function store(Request $request)
     {
-        $shu = Shu::updateOrCreate(
-            ['id' => $request->shu_id],
-            [
-                'bumdes_id' => $request->bumdes_id,
-                'nilai' => $request->nilai,
-                'tanggal' => Carbon::parse($request->tanggal)->format('d-m-Y'),
-            ]
-        );
-        return response()->json($shu);
+        if (Auth::user()->hasRole('bumdes')){
+            $shu = Shu::updateOrCreate(
+                ['id' => $request->shu_id],
+                [
+                    'bumdes_id' => $request->bumdes_id,
+                    'nilai' => $request->nilai,
+                    'tanggal' => Carbon::parse($request->tanggal)->format('d-m-Y'),
+                ]
+            );
+            return response()->json($shu);
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -99,21 +110,26 @@ class ShuController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $bumdes = ProfilBumdes::findOrFail($id);
-        if ($request->ajax()) {
-            $data = Shu::where('bumdes_id', "$id")->get();
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editShu"><i class="metismenu-icon pe-7s-pen"></i></a>';
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteShu"><i class="metismenu-icon pe-7s-trash"></i></a>';
-    
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+        if (Auth::user()->hasRole('bumdes')){
+            $bumdes = ProfilBumdes::findOrFail($id);
+            if ($request->ajax()) {
+                $data = Shu::where('bumdes_id', "$id")->get();
+                return Datatables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('action', function($row){
+                               $btn = '<a href="javascript:void(0)" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editShu"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                               $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteShu"><i class="metismenu-icon pe-7s-trash"></i></a>';
+        
+                                return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+            }
+            return view('shu.index', compact('bumdes'));
         }
-        return view('shu.index', compact('bumdes'));
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -124,8 +140,13 @@ class ShuController extends Controller
      */
     public function edit($id)
     {
-        $shu = Shu::find($id);
-        return response()->json($shu);
+        if (Auth::user()->hasRole('bumdes')){
+            $shu = Shu::find($id);
+            return response()->json($shu);
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -137,7 +158,7 @@ class ShuController extends Controller
      */
     public function update(Request $request, Shu $shu)
     {
-        //
+        return response()->view('errors.404', [abort(404)], 404);
     }
 
     /**
@@ -148,8 +169,13 @@ class ShuController extends Controller
      */
     public function destroy($id)
     {
-        $shu = Shu::find($id);
-        $shu->delete();
-        return response()->json($shu);
+        if (Auth::user()->hasRole('bumdes')){
+            $shu = Shu::find($id);
+            $shu->delete();
+            return response()->json($shu);
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 }
