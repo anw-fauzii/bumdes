@@ -21,8 +21,8 @@ class HomeController extends Controller
                     ->groupByRaw('MONTH(created_at)')
                     ->pluck('total');
         $bulan = Shu::where('bumdes_id', Auth::user()->profil_bumdes_id)->selectRaw('MONTH(created_at) as bulan')
-                    ->groupByRaw('MONTH(created_at)')
-                    ->pluck('bulan');    
+                    ->groupByRaw('bulan')
+                    ->pluck('bulan');
     	return view('dashboard',compact('userData','bulan'));
     }
 

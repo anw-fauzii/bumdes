@@ -24,7 +24,7 @@
             <div class="mb-3 card">
                 <div class="card-header-tab card-header-tab-animation card-header">
                     <div class="card-header-title">
-                        FORM INPUT
+                        Input Profil Bumdes
                     </div>
                 </div>
                 <div class="card-body">
@@ -33,59 +33,82 @@
                             @csrf
                             @method('put')
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
+                                    <div class="main-card mb-3 card">
+                                        <div class="card-body"><h5 class="card-title text-center mb-4">Logo Bumdes</h5>
+                                        <div class="col-md-12 mb-2 text-center">
+                                            <img id="preview-image-before-upload" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif"
+                                                alt="preview image" style="max-height: 150px;">
+                                        </div>
+                                        <div class="position-relative row form-group">
+                                                <div class="col-sm-8"><input name="logo" id="logo" type="file" class="form-control-file">
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="main-card mb-3 card">
                                         <div class="card-body">
+                                        <div id="googleMap" style="width:100%;height:400px;"></div>
+                                        * Gunakan Peta Untuk Membantu Menentukan Longitude dan Latitude
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="main-card mb-3 card">
+                                        <div class="card-body"><h5 class="card-title text-center mb-4">Informasi Dasar</h5>
                                         <input type="hidden" name="kecamatan_id" value="{{$bumdes->kecamatan_id}}">
                                         <input type="hidden" name="kabupaten_id" value="{{$bumdes->kabupaten_id}}">
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Nama Bumdes</label>
-                                                <div class="col-sm-8"><input placeholder="Masukan Nama Bumdes" type="text" name="nama" value="{{ $bumdes->nama }}" class="form-control">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nama BUMDes</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Nama BUMDes" type="text" name="nama" value="{{ $bumdes->nama }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Alamat</label>
-                                                <div class="col-sm-8"><input placeholder="Masukan Alamat" type="text" name="alamat" value="{{ $bumdes->alamat }}" class="form-control">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">RT/RW</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan RT/RW" type="text" name="rtrw" value="{{ $bumdes->rtrw }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Desa</label>
-                                                <div class="col-sm-8"><input placeholder="Masukan Desa" type="text" name="desa" value="{{ $bumdes->desa }}" class="form-control">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Dusun/Kampung</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Dusun/Kampung" type="text" name="desa" value="{{ $bumdes->desa }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Jenis Usaha</label>
-                                                <div class="col-sm-8">
-                                                <select id="jenis_id" name="jenis_id[]" multiple="multiple" type="select" class="custom-select" class="form-control">
-                                                    <option disable="true"disabled>--- Pilih Jenis Usaha ---</option>
-                                                    @foreach ($jenis as $row)
-                                                        <option value="{{ $row->id }}" {{ in_array($row->id, $jenisTerpilih) ? 'selected' : '' }}>{{ ucfirst($row->nama) }}</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Desa</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Desa" type="text" name="desa" value="{{ $bumdes->desa }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Telepon</label>
-                                                <div class="col-sm-8"><input placeholder="Masukan Telepon" type="text" name="telepon" value="{{ $bumdes->telepon }}" class="form-control">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Kecamatan</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Kecamatan" type="text" name="telepon" value="{{ $bumdes->telepon }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Latitude</label>
-                                                <div class="col-sm-8"><input placeholder="Masukan Latitude" type="text" name="lat" id="lat" value="{{ $bumdes->lat }}" class="form-control">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Kabupaten</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Kabupaten" type="text" name="lat" id="lat" value="{{ $bumdes->lat }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Longitude</label>
-                                                <div class="col-sm-8"><input placeholder="Masukan Longitude" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nomor Perdes</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Nomor Perdes" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Logo</label>
-                                                <div class="col-sm-8"><input name="logo" type="file" class="form-control-file">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Tahun Berdiri</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Tahun Berdiri" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control" required>
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Foto 1</label>
-                                                <div class="col-sm-8"><input name="foto1" type="file" class="form-control-file">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Latitude</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Longitude" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Foto 2</label>
-                                                <div class="col-sm-8"><input name="foto2" type="file" class="form-control-file">
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Longitude</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Longitude" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Foto 3</label>
-                                                <div class="col-sm-8"><input name="foto3" type="file" class="form-control-file">
+                                            <h5 class="card-title text-center mb-4 mt-4">Kontak</h5>
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nama Ketua</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Nama Ketua" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control" required>
+                                                    </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nomor Kontak</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Nomor Kontak" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
+                                                    </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Email BUMDes</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Email BUMDes" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
                                                     </div>
                                             </div>
                                             <div class="text-center">
@@ -95,13 +118,7 @@
                                             </div> 
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="main-card mb-3 card">
-                                        <div class="card-body">
-                                        <div id="googleMap" style="width:100%;height:400px;"></div>
-                                        </div>
-                                    </div>
+                                
                                 </div>
                             </div>
                         </form>
@@ -112,18 +129,27 @@
     </div>
 </div>  
 @include('js.bumdes')  
-<script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+     
+$(document).ready(function (e) {
+   
+   $('#logo').change(function(){
+            
+    let reader = new FileReader();
+ 
+    reader.onload = (e) => { 
+ 
+      $('#preview-image-before-upload').attr('src', e.target.result); 
+    }
+ 
+    reader.readAsDataURL(this.files[0]); 
+   
+   });
+   
+});
+ 
+</script>
 
-            $(document).ready(function () {
-
-                $("#jenis_id").select2({
-
-                    placeholder:"--- Pilih Jenis Usaha ---"
-
-                });
-
-            });
-
-        </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7FALA_C8nQFFy1A8D6NWavSyS_rqIBc&callback=myMap"></script>   
 @endsection

@@ -31,7 +31,6 @@
                     <div class="tab-content">
                         <div class="card-body">
                             <div id="container"></div>
-                            {{$userData}}, {{$bulan}}
                         </div>
                     </div>
                 </div> 
