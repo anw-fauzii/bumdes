@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JenisUsaha extends Model
+class Foto extends Model
 {
     use HasFactory;
-    protected $table = "jenis_usaha";
+    protected $table = "foto";
     protected $fillable = [
         'user_id',
-        'nama_jenis_usaha'
+        'foto_path'
     ];
 
     public function bumdes(){

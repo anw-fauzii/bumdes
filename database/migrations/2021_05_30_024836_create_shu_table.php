@@ -15,12 +15,12 @@ class CreateShuTable extends Migration
     {
         Schema::create('shu', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bumdes_id')->unsigned();
-            $table->integer('nilai');
-            $table->string('tanggal');
-            $table->timestamps();
-
-            $table->foreign('bumdes_id')->references('id')->on('profil_bumdes')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->string('nilai');
+            $table->string('status');
+            $table->string('keterangan')->nullable();
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

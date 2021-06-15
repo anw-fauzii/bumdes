@@ -27,11 +27,19 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
-        'password',
-        'profil_bumdes_id',
-        'profile_photo_path'
+        'rtrw',
+        'dusun',
+        'desa',
+        'kecamatan_id',
+        'kabupaten_id',
+        'perdes',
+        'tahun',
+        'lat',
+        'long',
+        'kontak',
+        'logo',
     ];
 
     /**

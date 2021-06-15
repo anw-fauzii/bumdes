@@ -10,9 +10,10 @@ class Shu extends Model
     use HasFactory;
     protected $table = "shu";
     protected $fillable = [
-        'bumdes_id',
+        'user_id',
         'nilai',
-        'tanggal'
+        'status',
+        'keterangan'
     ];
 
     public function bumdes(){
