@@ -8,13 +8,23 @@
                 <form id="userFormCreate" name="userFormCreate" class="form-horizontal">
                     <input type="hidden" name="user_id" id="user_id">
                     <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Nama</label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama" value="" maxlength="50" required="">
+                        <div class="position-relative row form-group"><label class="col-sm-2 col-form-label" for="nama">Nama</label>
+                            <div class="col-sm-10"><input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama" value="" maxlength="50" required="">
+                                </div>
                         </div>
-                        <label for="name" class="col-sm-5 control-label">Email</label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Masukan Email" value="" maxlength="50" required="">
+                        <div class="position-relative row form-group"><label class="col-sm-2 col-form-label" for="ttl">Email</label>
+                            <div class="col-sm-10"><input type="text" class="form-control" id="email" name="email" placeholder="Masukan Nama" value="" maxlength="50" required="">
+                                </div>
+                        </div>
+                        <div class="position-relative row form-group"><label class="col-sm-2 col-form-label" for="">Role</label>
+                            <div class="col-sm-10">
+                                <div>
+                                    <div class="custom-radio custom-control custom-control-inline"><input type="radio" id="admin" value="admin" name="role" class="custom-control-input"><label class="custom-control-label"
+                                        for="admin">Admin</label></div>
+                                    <div class="custom-radio custom-control custom-control-inline"><input type="radio" id="bumdes" Value="bumdes" name="role" class="custom-control-input"><label class="custom-control-label"
+                                        for="bumdes">Bumdes</label></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

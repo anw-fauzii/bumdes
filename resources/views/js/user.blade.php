@@ -26,12 +26,12 @@ $(function () {
         ]
     });
 
-//CREATE Jenis
+//CREATE User
     $('#createUser').click(function () {
         $('#saveUser').val("create-jenis");
         $('#jenis_id').val('');
         $('#userFormCreate').trigger("reset");
-        $('#modelHeading').html("Tambah Jenis Usaha");
+        $('#modelHeading').html("Tambah User");
         $('#modalCreateUser').modal('show');
         $('#modalCreateUser').appendTo('body');
     });
@@ -40,7 +40,7 @@ $(function () {
     $('body').on('click', '.editUser', function () {
         var jenis_id = $(this).data('id');
         $.get("{{ route('user.index') }}" +'/' + jenis_id +'/edit', function (data) {
-            $('#modelHeading').html("Edit Jenis Usaha");
+            $('#modelHeading').html("Edit User");
                 $('#saveUser').val("edit-jenis");
                 $('#modalCreateUser').modal('show');
                 $('#modalCreateUser').appendTo('body');
@@ -50,7 +50,7 @@ $(function () {
         })
     });
 
-//SAVE & UPDATE Jenis
+//SAVE & UPDATE User
     $('#saveUser').click(function (e) {
         e.preventDefault();
         $(this).html('Menyimpan..');
@@ -73,7 +73,7 @@ $(function () {
         });
     });
 
-//DELETE Jenis
+//DELETE User
     $('body').on('click', '.deleteUser', function (){
         var jenis_id = $(this).data("id");
         var result = Swal.fire({

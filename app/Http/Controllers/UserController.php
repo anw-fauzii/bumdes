@@ -87,7 +87,14 @@ class UserController extends Controller
                     'password' => Hash::make("12345678")
                 ]
             );
-            $user->assignRole('admin');
+            if($request->role == "admin")
+            {
+                $user->assignRole('admin');
+            }
+            else
+            {
+                $user->assignRole('bumdes');
+            }
             return response()->json($user);
         }
         else{
