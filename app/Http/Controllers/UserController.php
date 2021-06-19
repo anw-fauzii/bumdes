@@ -82,7 +82,7 @@ class UserController extends Controller
             $user = User::updateOrCreate(
                 ['id' => $request->user_id],
                 [
-                    'name' => $request->name,
+                    'nama' => $request->nama ,
                     'email' => $request->email,
                     'password' => Hash::make("12345678")
                 ]
@@ -167,6 +167,20 @@ class UserController extends Controller
             $user = User::find($id);
             $user->delete();
             return response()->json($user);
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
+    }
+
+    public function reset($id)
+    {
+        if (Auth::user()->hasRole('admin')){
+            $user = User::find($id);
+            $user->update([
+                'password' => Hash::make("12345678")
+            ]);
+            return redirect('user')->with('sukses','Password Berhasil Direset');
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);

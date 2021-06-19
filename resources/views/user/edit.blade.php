@@ -12,9 +12,7 @@
                 <div class="page-title-icon">
                     <i class="pe-7s-settings icon-gradient bg-mean-fruit"></i>
                 </div>
-                <div>Ubah Password
-                    <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
-                    </div>
+                <div><h3>Ubah Password</h3>
                 </div>
             </div>  
         </div> 
@@ -22,6 +20,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mb-3 card">
+                <div class="card-header-tab card-header-tab-animation card-header">
+                    Ubah PAssword
+                </div>
                 <div class="card-body">
                     <div class="tab-content">
                         @if ($errors->any())

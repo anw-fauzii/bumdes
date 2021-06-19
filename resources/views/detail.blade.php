@@ -47,9 +47,9 @@
                                                     <td><span id="lat"></span> , <span id="long"></span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>SHU</td>
+                                                    <td>Perdes</td>
                                                     <td>:</td>
-                                                    <td>Shu/bumdes/2020</td>
+                                                    <td><span id="perdes"></span></td>
                                                 </tr>
                                             </tbody>
                                         </table>

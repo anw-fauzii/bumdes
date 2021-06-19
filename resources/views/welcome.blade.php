@@ -102,10 +102,14 @@
                       <td>{{$row->desa}}</td>
                       <td>{{$row->kecamatan->nama}}</td>
                       <td>
+                      @if($row->jenis_usaha != NULL)
                         @foreach (json_decode($row->jenis_usaha) as $jenis)
                         {{ $loop->first ? '' : ', ' }}
                         {{$jenis}}
                         @endforeach
+                      @else
+                      Belum Diupdate
+                      @endif
                       </td>
                       <td>{{$row->tahun}}</td>
                       <td>{{$row->status}}</td>
@@ -118,6 +122,7 @@
                           data-ketua="{{$row->ketua}}"
                           data-kontak="{{$row->kontak}}"
                           data-email="{{$row->email}}"
+                          data-perdes="{{$row->perdes}}"
                           data-foto1="
                           @foreach($row->foto as $foto)
                           {{asset('storage/'. $foto->foto1)}}
@@ -307,7 +312,7 @@
                 { 
                     lat: "{{ $location->lat }}",
                     long: "{{ $location->long }}",
-                    nama: "<img src ='{{asset('storage/'. $location->logo)}}' width='42' class='rounded-circle text-center'><br><h5> {{ $location->nama }} </h5> <a target='_blank' href='https://www.google.com/maps/dir//{{$location->lat}},{{$location->long}}'>Petunjuk Arah</a>",
+                    nama: "<img src ='{{asset('storage/'. $location->logo)}}' width='42' class='rounded-circle' style='margin-left: auto;margin-right: auto;'><br><h5> {{ $location->nama }} </h5> <a target='_blank' href='https://www.google.com/maps/dir//{{$location->lat}},{{$location->long}}'>Petunjuk Arah</a>",
                     },
             @endforeach
             ];
@@ -382,13 +387,15 @@
               kontak = $(this).attr('data-kontak'),
               lat = $(this).attr('data-lat'),
               long = $(this).attr('data-long'),
-              email = $(this).attr('data-email')
+              email = $(this).attr('data-email'),
+              perdes = $(this).attr('data-perdes')
               ;
               $("#ketua").html(ketua);
               $("#kontak").html(kontak);
               $("#email").html(email);
               $("#lat").html(lat);
               $("#long").html(long);
+              $("#perdes").html(perdes);
               $("#latitude").val(lat);
               $("#longitude").val(long);
               $('#logo').attr('src', $(this).attr('data-logo'));

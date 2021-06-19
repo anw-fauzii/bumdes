@@ -8,13 +8,13 @@
                 <form id="userFormCreate" name="userFormCreate" class="form-horizontal">
                     <input type="hidden" name="user_id" id="user_id">
                     <div class="form-group">
-                        <label for="name" class="col-sm-5 control-label">Jenis Usaha</label>
+                        <label for="name" class="col-sm-5 control-label">Nama</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Masukan Jenis Usaha" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama" value="" maxlength="50" required="">
                         </div>
-                        <label for="name" class="col-sm-5 control-label">Jenis Usaha</label>
+                        <label for="name" class="col-sm-5 control-label">Email</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Masukan Jenis Usaha" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Masukan Email" value="" maxlength="50" required="">
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

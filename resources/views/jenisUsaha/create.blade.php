@@ -84,7 +84,7 @@
                         </div>
                         <div class="tab-pane" id="tab-eg7-1" role="tabpanel">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover table-bumdes">
+                            <table id="example" class="table table-striped table-hover">
                             <thead>
                                     <tr class="text-center">
                                         <th>No</th>
@@ -117,32 +117,14 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js" ></script>
 <script>
-$(function () {
- 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });  
-
-//Tabel Jenis Usaha
-    var tableShu = $('.table-shu').DataTable({
-        processing: true,
-        serverSide: true,
-        responsive: true,
-        autoWidth: false,
-        retrieve: true,
-        ajax: "",
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'nilai', render: $.fn.dataTable.render.number(',','.',0,'Rp. '), name: 'nilai'},
-            {data: 'tanggal', name: 'tanggal'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
-    });
-});
-</script>
+       $(document).ready(function() {
+    $('#example').DataTable();
+        } );
+    </script>
 <script type="text/javascript">
     $(function () {
         $("input[name='status']").click(function () {

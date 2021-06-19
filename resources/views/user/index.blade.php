@@ -12,9 +12,7 @@
                 <div class="page-title-icon">
                     <i class="pe-7s-users icon-gradient bg-mean-fruit"></i>
                 </div>
-                <div>User
-                    <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
-                    </div>
+                <div><h3>User</h3>
                 </div>
             </div>  
         </div> 
@@ -33,13 +31,13 @@
                             <table class="table table-striped table-hover table-user">
                                 <thead>
                                     <tr class="text-center">
-                                        <th width="10%">No</th>
-                                        <th width="20%">Nama</th>
+                                        <th width="8%">No</th>
+                                        <th width="17%">Nama</th>
                                         <th width="20%">Email</th>
                                         <th width="15%">Hak Akses</th>
                                         <th width="10%">Status</th>
                                         <th width="15%">Terakhir Aktif</th>
-                                        <th width="10%">Aksi</th>
+                                        <th width="15%">Aksi</th>
                                     </tr>
                                 </thead>
                             </table>

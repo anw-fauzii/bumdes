@@ -12,9 +12,7 @@
                 <div class="page-title-icon">
                     <i class="pe-7s-culture icon-gradient bg-mean-fruit"></i>
                 </div>
-                <div>Edit Bumdes
-                    <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
-                    </div>
+                <div><h3>Tambah Bumdes</h3>
                 </div>
             </div>  
         </div> 
@@ -60,25 +58,6 @@
                                                 <div class="col-sm-9"><input placeholder="Masukan Nama BUMDes" type="text" name="nama" value="" class="form-control">
                                                     </div>
                                             </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">RT/RW</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan RT/RW" type="text" name="rtrw" value="" class="form-control">
-                                                    </div>
-                                            </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Dusun/Kampung</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Dusun/Kampung" type="text" name="dusun" value="" class="form-control">
-                                                    </div>
-                                            </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Desa</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Desa" type="text" name="desa" value="" class="form-control">
-                                                    </div>
-                                            </div>
-                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Kecamatan</label>
-                                                <div class="col-sm-9">
-                                                    <select name="namaKec" id="namaKec" class="form-control">
-                                                        <option disable="true" selected="true" disabled>--- Pilih Kecamatan---</option>
-                                                    </select>
-                                                </div>
-                                            </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Kabupaten</label>
                                                 <div class="col-sm-9">
                                                     <select name="namaKab" id="namaKab" class="form-control">
@@ -88,6 +67,26 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Kecamatan</label>
+                                                <div class="col-sm-9">
+                                                    <select name="namaKec" id="namaKec" class="form-control">
+                                                        <option disable="true" selected="true" disabled>--- Pilih Kecamatan---</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Desa</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Desa" type="text" name="desa" value="" class="form-control">
+                                                    </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Dusun/Kampung</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan Dusun/Kampung" type="text" name="dusun" value="" class="form-control">
+                                                    </div>
+                                            </div>
+                                            <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">RT/RW</label>
+                                                <div class="col-sm-9"><input placeholder="Masukan RT/RW" type="text" name="rtrw" value="" class="form-control">
+                                                    </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nomor Perdes</label>
                                                 <div class="col-sm-9"><input placeholder="Masukan Nomor Perdes" type="text" name="perdes" id="perdes" value="" class="form-control">

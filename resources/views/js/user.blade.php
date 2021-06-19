@@ -64,7 +64,7 @@ $(function () {
                 $('#modalCreateUser').modal('hide');
                 $('#saveUser').html('<i class="metismenu-icon pe-7s-paper-plane"></i> Simpan');
                 tableUser.draw();
-                Swal.fire("Sukes!", "Jenis Usaha Berhasil Disimpan!", "success");
+                Swal.fire("Sukes!", "User Berhasil Disimpan!", "success");
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -88,7 +88,7 @@ $(function () {
                     url: "{{ route('user.store') }}"+'/'+jenis_id,
                     success: function (data) {
                         tableUser.draw();
-                        Swal.fire("Sukes!", "Jenis Usaha Berhasil Dihapus!", "success");
+                        Swal.fire("Sukes!", "User Berhasil Dihapus!", "success");
                     },
                     error: function (data) {
                         console.log('Error:', data);
@@ -97,6 +97,7 @@ $(function () {
             }
         })
     });
+    
 
 });
 </script>

@@ -79,7 +79,7 @@
                     </a>
                 </li>   
                 <li>
-                    <a href="{{ route('user.show', Auth::user()->id) }}">
+                    <a href="{{ route('profil')}}">
                         <i class="metismenu-icon pe-7s-user"></i>
                             Profil
                     </a>

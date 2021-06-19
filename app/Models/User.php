@@ -40,7 +40,8 @@ class User extends Authenticatable
         'long',
         'kontak',
         'logo',
-        'ketua'
+        'ketua',
+        'password'
     ];
 
     /**
