@@ -12,7 +12,7 @@
                 <div class="page-title-icon">
                     <i class="pe-7s-culture icon-gradient bg-mean-fruit"></i>
                 </div>
-                <div>Daftar Bumdes di {{$kecamatan->nama}}
+                <div>Daftar Bumdes
                     <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
                     </div>
                 </div>
@@ -24,10 +24,7 @@
             <div class="mb-3 card">
                 <div class="card-header-tab card-header-tab-animation card-header">
                     <div class="btn-actions-pane-left">
-                    <a class="btn btn-danger" href="{{route('kecamatan.show', $kecamatan->kabupaten_id)}}"><i class="metismenu-icon pe-7s-prev"></i> Kembali</a>        
-                    </div>
-                    <div class="btn-actions-pane-right">
-                    <a class="btn btn-success" href="{{route('bumdes.create', $kecamatan->id)}}"><i class="metismenu-icon pe-7s-note"></i> Tambah Bumdes</a>    
+                    <a class="btn btn-success" href="{{route('bumdes.create')}}"><i class="metismenu-icon pe-7s-note"></i> Tambah Bumdes</a>        
                     </div>
                 </div>
                 <div class="card-body">
@@ -38,11 +35,12 @@
                                     <tr class="text-center">
                                         <th>No</th>
                                         <th>Bumdes</th>
-                                        <th>Alamat</th>
                                         <th>Desa</th>
-                                        <th>Telepon</th>
+                                        <th>Kecamatan</th>
+                                        <th>Jenis Usaha</th>
                                         <th>Latitude</th>
                                         <th>Longitude</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>

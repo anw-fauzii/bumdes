@@ -24,7 +24,7 @@
             <div class="mb-3 card">
                 <div class="card-header-tab card-header-tab-animation card-header">
                     <div class="card-header-title">
-                    <a class="btn btn-success" href="javascript:void(0)" id="createUser"><i class="metismenu-icon pe-7s-note"></i> Tambah User Usaha</a>
+                    <a class="btn btn-success" href="javascript:void(0)" id="createUser"><i class="metismenu-icon pe-7s-note"></i> Tambah User</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -33,10 +33,13 @@
                             <table class="table table-striped table-hover table-user">
                                 <thead>
                                     <tr class="text-center">
-                                        <th width="15%">No</th>
-                                        <th width="35%">Nama</th>
-                                        <th width="35%">Email</th>
-                                        <th width="15%">Aksi</th>
+                                        <th width="10%">No</th>
+                                        <th width="20%">Nama</th>
+                                        <th width="20%">Email</th>
+                                        <th width="15%">Hak Akses</th>
+                                        <th width="10%">Status</th>
+                                        <th width="15%">Terakhir Aktif</th>
+                                        <th width="10%">Aksi</th>
                                     </tr>
                                 </thead>
                             </table>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kecamatan;
 use App\Models\Kabupaten;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use DataTables;
 
 class KecamatanController extends Controller
@@ -14,9 +15,31 @@ class KecamatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->view('errors.404', [abort(404)], 404);
+        if (Auth::user()->hasRole('admin')){
+            if ($request->ajax()) {
+                $data = Kecamatan::with('bumdes')->orderBy('kabupaten_id')->orderBy('nama')->get();
+                return Datatables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('jumlah', function($data) {
+                            $btn = '<a href="'.route('bumdes.show', $data->id).'" data-toggle="tooltip" title="Lihat Bumdes" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan">Jumlah BUMDes, '.$data->bumdes->count().' Bumdes</a>';
+                            return $btn;
+                         })
+                        ->addColumn('action', function($row){
+                               $btn =' <a href="'.route('kecamatan.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                               $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKecamatan"><i class="metismenu-icon pe-7s-trash"></i></a>';
+        
+                                return $btn;
+                        })
+                        ->rawColumns(['action','jumlah'])
+                        ->make(true);
+            }
+            return view('kecamatan.index');
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -24,10 +47,10 @@ class KecamatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
         if (Auth::user()->hasRole('admin')){
-            $kabupaten = Kabupaten::findOrFail($id);
+            $kabupaten = Kabupaten::orderBy('nama')->get();
             return view('kecamatan.create',compact('kabupaten'));
         }
         else{
@@ -64,20 +87,20 @@ class KecamatanController extends Controller
         if (Auth::user()->hasRole('admin')){
             $kabupaten = Kabupaten::findOrFail($id);
             if ($request->ajax()) {
-                $data = Kecamatan::with('bumdes')->where('kabupaten_id', "$id")->get();
+                $data = Kecamatan::with('bumdes')->where('kabupaten_id', "$id")->orderBy('nama')->get();
                 return Datatables::of($data)
                         ->addIndexColumn()
                         ->addColumn('jumlah', function($data) {
-                            return $data->bumdes->count();
+                            $btn = '<a href="'.route('bumdes.show', $data->id).'" data-toggle="tooltip" title="Lihat Bumdes" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan">Jumlah BUMDes, '.$data->bumdes->count().' Bumdes</a>';
+                            return $btn;
                          })
                         ->addColumn('action', function($row){
-                               $btn = '<a href="'.route('bumdes.show', $row->id).'" data-toggle="tooltip" title="Lihat Bumdes" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editKecamatan"><i class="metismenu-icon pe-7s-info"></i></a>';
-                               $btn = $btn. ' <a href="'.route('kecamatan.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                               $btn = ' <a href="'.route('kecamatan.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
                                $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKecamatan"><i class="metismenu-icon pe-7s-trash"></i></a>';
         
                                 return $btn;
                         })
-                        ->rawColumns(['action'])
+                        ->rawColumns(['action','jumlah'])
                         ->make(true);
             }
             return view('kecamatan.index',compact('kabupaten'));

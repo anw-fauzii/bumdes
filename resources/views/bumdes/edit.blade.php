@@ -56,8 +56,6 @@
                                 <div class="col-md-7">
                                     <div class="main-card mb-3 card">
                                         <div class="card-body"><h5 class="card-title text-center mb-4">Informasi Dasar</h5>
-                                        <input type="hidden" name="kecamatan_id" value="{{$bumdes->kecamatan_id}}">
-                                        <input type="hidden" name="kabupaten_id" value="{{$bumdes->kabupaten_id}}">
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nama BUMDes</label>
                                                 <div class="col-sm-9"><input placeholder="Masukan Nama BUMDes" type="text" name="nama" value="{{ $bumdes->nama }}" class="form-control">
                                                     </div>
@@ -67,7 +65,7 @@
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Dusun/Kampung</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Dusun/Kampung" type="text" name="desa" value="{{ $bumdes->desa }}" class="form-control">
+                                                <div class="col-sm-9"><input placeholder="Masukan Dusun/Kampung" type="text" name="dusun" value="{{ $bumdes->dusun }}" class="form-control">
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Desa</label>
@@ -75,23 +73,35 @@
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Kecamatan</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Kecamatan" type="text" name="telepon" value="{{ $bumdes->telepon }}" class="form-control">
-                                                    </div>
+                                                <div class="col-sm-9">
+                                                    <select name="namaKec" id="namaKec" class="form-control">
+                                                        <option disable="true" selected="true" disabled>--- Pilih Kecamatan---</option>
+                                                        @foreach ($namaKec as $key => $value)
+                                                            <option value="{{ $key }}" {{ $key == $bumdes->kecamatan_id ? 'selected':'' }}>{{ $value }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Kabupaten</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Kabupaten" type="text" name="lat" id="lat" value="{{ $bumdes->lat }}" class="form-control">
-                                                    </div>
+                                                <div class="col-sm-9">
+                                                    <select name="namaKab" id="namaKab" class="form-control">
+                                                        <option disable="true" selected="true" disabled>--- Pilih Kabupaten ---</option>
+                                                        @foreach ($namaKab as $key => $value)
+                                                            <option value="{{ $key }}" {{ $key == $bumdes->kabupaten_id ? 'selected':'' }}>{{ $value }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nomor Perdes</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Nomor Perdes" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
+                                                <div class="col-sm-9"><input placeholder="Masukan Nomor Perdes" type="text" name="perdes" id="perdes" value="{{ $bumdes->perdes }}" class="form-control">
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Tahun Berdiri</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Tahun Berdiri" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control" required>
+                                                <div class="col-sm-9"><input placeholder="Masukan Tahun Berdiri" type="text" name="tahun" id="tahun" value="{{ $bumdes->tahun }}" class="form-control" required>
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Latitude</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Longitude" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
+                                                <div class="col-sm-9"><input placeholder="Masukan Longitude" type="text" name="lat" id="lat" value="{{ $bumdes->lat }}" class="form-control">
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Longitude</label>
@@ -100,15 +110,15 @@
                                             </div>
                                             <h5 class="card-title text-center mb-4 mt-4">Kontak</h5>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nama Ketua</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Nama Ketua" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control" required>
+                                                <div class="col-sm-9"><input placeholder="Masukan Nama Ketua" type="text" name="ketua" id="ketua" value="{{ $bumdes->ketua }}" class="form-control" required>
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nomor Kontak</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Nomor Kontak" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
+                                                <div class="col-sm-9"><input placeholder="Masukan Nomor Kontak" type="text" name="kontak" id="kontak" value="{{ $bumdes->kontak }}" class="form-control">
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Email BUMDes</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Email BUMDes" type="text" name="long" id="long" value="{{ $bumdes->long }}" class="form-control">
+                                                <div class="col-sm-9"><input placeholder="Masukan Email BUMDes" type="text" name="email" id="email" value="{{ $bumdes->email }}" class="form-control">
                                                     </div>
                                             </div>
                                             <div class="text-center">
@@ -149,6 +159,35 @@ $(document).ready(function (e) {
    
 });
  
+</script>
+
+<script>
+    jQuery(document).ready(function ()
+    {
+            jQuery('select[name="namaKab"]').on('change',function(){
+               var namaKabID = jQuery(this).val();
+               if(namaKabID)
+               {
+                  jQuery.ajax({
+                     url : '/kec/' +namaKabID,
+                     type : "GET",
+                     dataType : "json",
+                     success:function(data)
+                     {
+                        console.log(data);
+                        jQuery('select[name="namaKec"]').empty();
+                        jQuery.each(data, function(key,value){
+                           $('select[name="namaKec"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+                     }
+                  });
+               }
+               else
+               {
+                  $('select[name="namaKec"]').empty();
+               }
+            });
+    });
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7FALA_C8nQFFy1A8D6NWavSyS_rqIBc&callback=myMap"></script>   

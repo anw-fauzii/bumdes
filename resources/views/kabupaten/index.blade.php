@@ -34,11 +34,11 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th width="10%">No</th>
-                                        <th width="20%">Kabupaten</th>
-                                        <th width="15%">Total</th>
+                                        <th width="15%">Kabupaten</th>
+                                        <th width="25%">Jumlah Kecamatan</th>
                                         <th width="20%">Latitude</th>
                                         <th width="20%">Longitude</th>
-                                        <th width="15%">Aksi</th>
+                                        <th width="10%">Aksi</th>
                                     </tr>
                                 </thead>
                             </table>

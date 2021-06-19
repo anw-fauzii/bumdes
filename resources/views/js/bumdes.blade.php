@@ -54,11 +54,12 @@ $(function () {
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'nama', name: 'nama'},
-            {data: 'alamat', name: 'alamat'},
+            {data: 'desa', name: 'desa'},
+            {data: 'kecamatan', name: 'kecamatan'},
             {data: 'usaha', name: 'usaha'},
-            {data: 'telepon', name: 'telepon'},
             {data: 'lat', name: 'lat'},
             {data: 'long', name: 'long'},
+            {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });

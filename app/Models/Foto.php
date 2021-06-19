@@ -11,10 +11,13 @@ class Foto extends Model
     protected $table = "foto";
     protected $fillable = [
         'user_id',
-        'foto_path'
+        'foto1',
+        'foto2',
+        'foto3',
+        'foto4',
     ];
 
-    public function bumdes(){
-        return $this->belongsToMany(ProfilBumdes::class);
+    public function user(){
+        return $this->belongsToMany(User::class);
     }
 }

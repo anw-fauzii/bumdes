@@ -17,8 +17,11 @@ $(function () {
         ajax: "",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'name', name: 'name'},
+            {data: 'nama', name: 'nama'},
             {data: 'email', name: 'email'},
+            {data: 'role', name: 'role'},
+            {data: 'status', name: 'status'},
+            {data: 'last_seen', name: 'last_seen'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });

@@ -37,31 +37,31 @@
                 <li>
                     <a href="/dashboard">
                         <i class="metismenu-icon pe-7s-home"></i>
-                            Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('kabupaten.index') }}">
-                        <i class="metismenu-icon pe-7s-culture"></i>
-                            Bumdes
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('jenisUsaha.index') }}">
-                        <i class="metismenu-icon pe-7s-server"></i>
-                            Jenis Usaha
+                            Beranda
                     </a>
                 </li>   
                 <li>
-                    <a href="{{ route('user.index') }}">
-                        <i class="metismenu-icon pe-7s-cash"></i>
-                            Sisa Hasil Usaha
+                    <a href="{{ route('bumdes.index') }}">
+                        <i class="metismenu-icon pe-7s-culture"></i>
+                            Bumdes
                     </a>
                 </li>  
                 <li>
+                    <a href="{{ route('kabupaten.index') }}">
+                        <i class="metismenu-icon pe-7s-global"></i>
+                            Kabupaten
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('kecamatan.index') }}">
+                        <i class="metismenu-icon pe-7s-flag"></i>
+                            Kecamatan
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('user.index') }}">
                         <i class="metismenu-icon pe-7s-users"></i>
-                            User
+                            Akun
                     </a>
                 </li>  
                 @endrole 
@@ -69,34 +69,40 @@
                 <li>
                     <a href="/dashboard">
                         <i class="metismenu-icon pe-7s-home"></i>
-                            Dashboard
+                            Beranda
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('shu.show', Auth::user()->profil_bumdes_id) }}">
+                    <a href="{{ route('jenisUsaha.index') }}">
                         <i class="metismenu-icon pe-7s-server"></i>
-                            Sisa Hasil Usaha
+                            Jenis Usaha dan SHU
                     </a>
                 </li>   
                 <li>
-                    <a href="{{ route('profil', Auth::user()->profil_bumdes_id) }}">
+                    <a href="{{ route('user.show', Auth::user()->id) }}">
                         <i class="metismenu-icon pe-7s-user"></i>
                             Profil
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user.edit', Auth::user()->profil_bumdes_id) }}">
+                    <a href="{{ route('user.edit', Auth::user()->id) }}">
                         <i class="metismenu-icon pe-7s-settings"></i>
                             Akun
                     </a>
                 </li>
                 @endrole
                 <li>
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();"> <i class="metismenu-icon pe-7s-power"></i>Logout</a>
-                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                    </form>
+                    <a href="{{ route('tentang') }}">
+                        <i class="metismenu-icon pe-7s-info"></i>
+                            Tentang
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();"> <i class="metismenu-icon pe-7s-power"></i>Keluar</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>      
             </ul>
         </div>

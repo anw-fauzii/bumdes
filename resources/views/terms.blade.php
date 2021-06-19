@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+  <script src="{{ asset('js/main.js') }}"></script>
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('css/style2.css') }}" rel="stylesheet">
@@ -45,54 +47,83 @@
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
-        <h1 class="text-light"><a href="index.html"><span>Bumdes</span></h1></a>
+        <h1 class="text-light"><a href="index.html"><span>BUMDes</span></h1></a>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="{{ asset('img/logo.png') }}" alt="" class="img-fluid"></a>-->
       </div>
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#cari">Cari</a></li>
-          <li><a class="nav-link scrollto" href="#peta">Peta Bumdes</a></li>
-          <li><a class="nav-link scrollto" href="#list">List Bumdes</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="#about">Login</a></li>
+          <li><a class="nav-link scrollto" href="#cari">Home</a></li>
+          <li><a class="nav-link scrollto" href="#hero">Lokasi</a></li>
+          <li><a class="nav-link scrollto" href="#peta">Tentang</a></li>
+          <li><a class="getstarted scrollto" href="{{route('login')}}">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
     </div>
   </header><!-- End Header -->
-
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-
-    <div class="container">
-      <div class="row gy-4">
-        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-          <h1>Bettter digital experience with Ninestars</h1>
-          <h2>We are team of talented designers making websites with Bootstrap</h2>
-          <div>
-            <a href="#about" class="btn-get-started scrollto">Get Started</a>
-          </div>
-        </div>
-        <div class="col-lg-6 order-1 order-lg-2 hero-img">
-          <img src="{{ asset('img/hero-img.svg') }}" class="img-fluid animated" alt="">
-        </div>
-      </div>
-    </div>
-
-  </section><!-- End Hero -->
-
   <main id="main">
 
   <!-- ======= Contact Us Section ======= -->
-  <section id="cari" class="cari">
+  <section id="contact" class="contact section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title text-left">
+          <h5><strong>Sistem Informasi Keberadaan</strong></h5>
+          <h3><strong>BADAN USAHA MILIK DESA (BUMDes)</strong></h3>
+          <h6>Peraturan Bumdes >></h6>
+        </div>
+        <div class="row">
+
+          <div class="col-lg-7 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+            <div class="info">
+            
+            </div>
+
+          </div>
+
+          <div class="col-lg-5 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="name">Your Name</label>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group col-md-6 mt-3 mt-md-0">
+                  <label for="name">Your Email</label>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <label for="name">Subject</label>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <label for="name">Message</label>
+                <textarea class="form-control" name="message" rows="10" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Us Section -->
+    
+    <!-- ======= Services Section ======= -->
+    <section id="peta" class="peta">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Cari Bumdes</h2>
+          <h2>Peta Sebaran Bumdes</h2>
         </div>
 
         <div class="row">
@@ -102,7 +133,7 @@
             </div>
             <div class="col">
                 <label for="namaKab">Jenis Usaha</label>
-                <select name="namaKab" class="form-control">
+                <select name="jenis " class="form-control">
                     <option disable="true" selected="true" disabled>--- Pilih Jenis Usaha ---</option>
                     @foreach ($jenis as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
@@ -131,21 +162,6 @@
             
             </div>
             
-        </div>
-
-      </div>
-    </section><!-- End Contact Us Section -->
-    
-    <!-- ======= Services Section ======= -->
-    <section id="peta" class="peta section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Peta Sebaran Bumdes</h2>
-        </div>
-
-        <div class="row">
-            <div id="map"  style="width:100%;height:500px;"></div>
         </div>
 
       </div>
@@ -181,11 +197,15 @@
                                        @endforeach
                                     </td>
                                     <td>
-                                    <button class="btn btn-primary btn-sm">
-                                <i class="pe-7s-paper-plane"></i> lihat Foto
-                            </button>
+                                    <button type="button" class="btn mr-2 mb-2 btn-primary showFoto"
+                                    data-id="{{$row->id}}" data-foto1="{{asset('storage/'. $row->foto1)}}" data-foto2="{{asset('storage/'. $row->foto2)}}" data-foto3="{{asset('storage/'. $row->foto3)}}"
+                                    data-toggle="modal" data-target="#exampleModal">
+                                            Basic Modal
+                                        </button>
+                                        
                                     </td>
                                 </tr>
+                                @include('foto')
                                 @empty
                                 <tr>
                                     <td colspan="4" class="text-center">Tidak ada data</td>
@@ -196,6 +216,18 @@
                     </div>
 
       </div>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+      <script>
+        $(document).ready(function(){
+          $(document).on('click','.showFoto', function(){
+              $('#foto1').attr('src', $(this).attr('data-foto1'));
+              $('#foto2').attr('src', $(this).attr('data-foto2')); 
+              $('#foto3').attr('src', $(this).attr('data-foto3'));
+              $('#exampleModal').appendTo('body');
+          });
+        });
+      </script>
+
     </section><!-- End Contact Us Section -->
 
     <!-- ======= Contact Us Section ======= -->
@@ -287,59 +319,6 @@
       </div>
     </div>
 
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Ninestars</h3>
-            <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
-            </p>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
     <div class="container py-4">
       <div class="copyright">
         &copy; Copyright <strong><span>Ninestars</span></strong>. All Rights Reserved
@@ -426,7 +405,7 @@
         }
 
     </script>
-    <script type="text/javascript">
+    <script>
     jQuery(document).ready(function ()
     {
             jQuery('select[name="namaKab"]').on('change',function(){
@@ -458,13 +437,23 @@
     <script src="https://kit.fontawesome.com/95397704f9.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script>
+      $.noConflict();
        $(document).ready(function() {
     $('#example').DataTable();
 } );
 $.extend( $.fn.dataTable.defaults, {
     searching: false,
 } );
+    </script>
+    <script>
+      $('document').ready(function() {
+  $('#btnTest').click(function() {
+    $('#dummyModal').modal('show');
+  });
+});
     </script>
 </html>

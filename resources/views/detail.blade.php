@@ -1,24 +1,15 @@
-@extends('layouts.app')
-
-@section('title')
-    <title>Jenis Usaha</title>
-@endsection
-
-@section('content')
-<div class="app-main__inner">
-    <div class="app-page-title">
-        <div class="page-title-wrapper">
-            <div class="page-title-heading">
-                <div class="page-title-icon">
-                    <i class="pe-7s-server icon-gradient bg-mean-fruit"></i>
-                </div>
-                <div><h3>Jenis Usaha</h3>
-                </div>
-            </div>  
-        </div> 
-    </div>
-    <div class="row">
-        <div class="card-header">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detail Bumdes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-header">
                     <ul class="nav nav-justified">
                         <li class="nav-item"><a data-toggle="tab" href="#detail" class="active nav-link">Detail</a></li>
                         <li class="nav-item"><a data-toggle="tab" href="#foto" class="nav-link">Foto Bumdes</a></li>
@@ -68,15 +59,18 @@
                         </div>
                         <div class="tab-pane" id="foto" role="tabpanel">
                             <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
+                                <div class="carousel-inner text-center">
                                     <div class="carousel-item active">
-                                        <img class="d-block w-100" id="logo" alt="First slide">
+                                        <img id="foto1" width="60%" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block w-100" id="foto2" alt="Second slide">
+                                        <img id="foto2" width="60%" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block w-100" id="foto3" alt="Third slide">
+                                        <img id="foto3" width="60%" alt="Third slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img id="foto4" width="60%" alt="Forth slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleControls1" role="button" data-slide="prev">
@@ -90,9 +84,24 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
+            </div>
+            <input type="hidden" id="latitude">
+            <input type="hidden" id="longitude">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info goToLink">Lihat Lokasi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
     </div>
 </div>
-@include('jenisUsaha.create')
-@include('js.jenis')      
-@endsection
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+      <script>
+        $(document).ready(function(){
+          $(document).on('click','.goToLink', function(){
+            var latitude = document.getElementById("latitude").value;
+            var longitude = document.getElementById("longitude").value;
+                window.open('https://www.google.com/maps/dir//'+latitude+','+longitude ,'_blank');
+          });
+        });
+      </script>

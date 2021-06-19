@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProfilBumdes;
-use App\Models\JenisUsahaBumdes;
 use App\Models\JenisUsaha;
+use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\User;
+use App\Models\Foto;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
@@ -19,14 +20,30 @@ class ProfilBumdesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function profil()
+    public function index(Request $request)
     {
-        if (Auth::user()->hasRole('bumdes')){
-            $jenis =[];
-            $id = Auth::user()->profil_bumdes_id;
-            $bumdes = ProfilBumdes::find("$id");
-            $jenis = $bumdes->jenis->pluck('nama')->toArray();
-            return view('bumdes.show', compact('bumdes','jenis'));
+        if (Auth::user()->hasRole('admin')){
+            $kec = User::all();
+            if ($request->ajax()) {
+                $data = User::role('bumdes')->get();
+                return Datatables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('kecamatan', function($data){
+                            return $data->kecamatan->nama;
+                        })
+                        ->addColumn('usaha', function ($data) {
+                            return json_decode($data->jenis_usaha);
+                        })
+                        ->addColumn('action', function($row){
+                               $btn = '<a href="'.route('bumdes.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editBumdes"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                               $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteBumdes"><i class="metismenu-icon pe-7s-trash"></i></a>';
+        
+                                return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+            }
+            return view('bumdes.index', compact('kec'));
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -38,12 +55,11 @@ class ProfilBumdesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
         if (Auth::user()->hasRole('admin')){
-            $kecamatan = Kecamatan::findOrFail($id);
-            $jenis = JenisUsaha::orderBy('nama','ASC')->get();
-            return view('bumdes.create',compact('kecamatan','jenis'));
+            $namaKab = Kabupaten::pluck('nama', 'id');
+            return view('bumdes.create', compact('namaKab'));
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -59,31 +75,34 @@ class ProfilBumdesController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->hasRole('admin')){
-            $bumdes = new ProfilBumdes; 
+            $bumdes = new User; 
             $bumdes->nama = $request->nama;
-            $bumdes->alamat = $request->alamat;
+            $bumdes->email = $request->email;
+            $bumdes->password = Hash::make("12345678");
+            $bumdes->rtrw = $request->rtrw;
+            $bumdes->dusun = $request->dusun;
             $bumdes->desa = $request->desa;
+            $bumdes->kecamatan_id = $request->namaKec;
+            $bumdes->kabupaten_id = $request->namaKab;
+            $bumdes->jenis_usaha = json_decode("Belum Diupdate");
+            $bumdes->perdes = $request->perdes;
+            $bumdes->tahun = $request->tahun;
             $bumdes->lat = $request->lat;
             $bumdes->long = $request->long;
-            $bumdes->kabupaten_id = $request->kabupaten_id;
-            $bumdes->kecamatan_id = $request->kecamatan_id;
-            $bumdes->telepon = $request->telepon;
-            $bumdes->foto1 = $request->foto1;
-            $bumdes->foto2 = $request->foto2;
-            $bumdes->foto3 = $request->foto3;
+            $bumdes->kontak = $request->kontak;
+            $bumdes->ketua = $request->ketua;
+            $bumdes->status = "Tidak Aktif";
+            $file = $request->file('logo')->store('Logo', 'public');
+            $bumdes->logo = $file;
+            $bumdes->assignRole('bumdes');
             $bumdes->save();
-            $bumdes->jenis()->attach($request->jenis_id);
-    
-            $id_bumdes = ProfilBumdes::max('id');
-            $user = new User;
-            $user->name = $request->nama;
-            $user->email = $request->email;
-            $user->password = Hash::make("12345678");
-            $user->profil_bumdes_id = "$id_bumdes";
-            $user->assignRole('bumdes');
-            $user->save();
-    
-            $kecamatan = Kecamatan::find($request->get('kecamatan_id'));
+            
+            $foto = User::max('id'); 
+            $newfoto = Foto::create([
+                'user_id' => $foto,
+            ]); 
+
+            $kecamatan = Kecamatan::find($request->get('namaKec'));
     
             return redirect()->route('bumdes.show', $kecamatan)->with('sukses','Bumdes Berhasil Disimpan');
         }
@@ -101,24 +120,27 @@ class ProfilBumdesController extends Controller
     public function show(Request $request, $id)
     {
         if (Auth::user()->hasRole('admin')){
-            $kecamatan = Kecamatan::findOrFail($id);
+            $kec = User::all();
             if ($request->ajax()) {
-                $data = ProfilBumdes::with('jenis')->selectRaw('distinct profil_bumdes.*')->where('kecamatan_id', "$id")->get();
+                $data = User::where('kecamatan_id', "$id")->role('bumdes')->get();
                 return Datatables::of($data)
                         ->addIndexColumn()
+                        ->addColumn('kecamatan', function($data){
+                            return $data->kecamatan->nama;
+                        })
                         ->addColumn('usaha', function ($data) {
-                            return implode(', ', $data->jenis->pluck('nama')->toArray());
+                            return json_decode($data->jenis_usaha);
                         })
                         ->addColumn('action', function($row){
-                               $btn = '<a href="'.route('bumdes.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editBumdes"><i class="metismenu-icon pe-7s-pen"></i></a>';
-                               $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteBumdes"><i class="metismenu-icon pe-7s-trash"></i></a>';
+                               $btn = '<a href="javascript:void(0)" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editUser"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                               $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteUser"><i class="metismenu-icon pe-7s-trash"></i></a>';
         
                                 return $btn;
                         })
                         ->rawColumns(['action'])
                         ->make(true);
             }
-            return view('bumdes.index',compact('kecamatan'));
+            return view('bumdes.index', compact('kec'));
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -133,11 +155,10 @@ class ProfilBumdesController extends Controller
     public function edit($id)
     {
         if (Auth::user()->hasRole('bumdes')){
-            $jenisTerpilih =[];
-            $bumdes = ProfilBumdes::findOrFail($id);
-            $jenisTerpilih = $bumdes->jenis->pluck('id')->toArray();
-            $jenis = JenisUsaha::orderBy('nama','ASC')->get();
-            return view('bumdes.edit',compact('bumdes','jenis','jenisTerpilih'));  
+            $bumdes = User::findOrFail(Auth::user()->id);
+            $namaKab = Kabupaten::pluck('nama', 'id');
+            $namaKec = Kecamatan::pluck('nama', 'id');
+            return view('bumdes.edit',compact('bumdes','namaKab','namaKec'));  
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -154,52 +175,30 @@ class ProfilBumdesController extends Controller
     public function update(Request $request, $id)
     {
         if (Auth::user()->hasRole('bumdes')){
-            $bumdes = ProfilBumdes::findOrFail($id);
-            $bumdes->nama = $request->get('nama');
-            $bumdes->kabupaten_id = $request->get('kabupaten_id');
-            $bumdes->kecamatan_id = $request->get('kecamatan_id');
-            $bumdes->alamat = $request->get('alamat');
-            $bumdes->desa = $request->get('desa');
-            $bumdes->telepon = $request->get('telepon');
-            $bumdes->lat = $request->get('lat');
-            $bumdes->long = $request->get('long');
-            if($request->file('foto1')){
-                if($bumdes->foto1 && file_exists(storage_path('app/public/' . $bumdes->foto1))){
-                    \Storage::delete('public/'.$bumdes->foto1);
-                    }
-                $file1 = $request->file('foto1')->store('Foto', 'public');
-                $bumdes->foto1 = $file1;
-            }
-            if($request->file('foto2')){
-                if($bumdes->foto2 && file_exists(storage_path('app/public/' . $bumdes->foto2))){
-                    \Storage::delete('public/'.$bumdes->foto2);
-                    }
-                $file1 = $request->file('foto2')->store('Foto', 'public');
-                $bumdes->foto2 = $file1;
-            }            
-            if($request->file('foto3')){
-                if($bumdes->foto3 && file_exists(storage_path('app/public/' . $bumdes->foto3))){
-                    \Storage::delete('public/'.$bumdes->foto3);
-                    }
-                $file1 = $request->file('foto3')->store('Foto', 'public');
-                $bumdes->foto3 = $file1;
-            } 
-            $bumdes->save();
-            $id_user = Auth::user()->id;
-            $user=User::findOrFail("$id_user");
+            $bumdes = User::findOrFail(Auth::user()->id);
+            $bumdes->nama = $request->nama;
+            $bumdes->email = $request->email;
+            $bumdes->rtrw = $request->rtrw;
+            $bumdes->dusun = $request->dusun;
+            $bumdes->desa = $request->desa;
+            $bumdes->kecamatan_id = $request->namaKec;
+            $bumdes->kabupaten_id = $request->namaKab;
+            $bumdes->perdes = $request->perdes;
+            $bumdes->tahun = $request->tahun;
+            $bumdes->lat = $request->lat;
+            $bumdes->long = $request->long;
+            $bumdes->kontak = $request->kontak;
+            $bumdes->ketua = $request->ketua;
+            $bumdes->status = "Tidak Aktif";
             if($request->file('logo')){
-                if($user->profile_photo_path && file_exists(storage_path('app/public/' . $user->profile_photo_path))){
-                    \Storage::delete('public/'.$user->logo);
+                if($bumdes->logo && file_exists(storage_path('app/public/' . $bumdes->logo))){
+                    \Storage::delete('public/'.$bumdes->logo);
                     }
-                $file1 = $request->file('logo')->store('Logo', 'public');
-                $user->profile_photo_path = $file1;
-            } 
-            $user->save();
-            if(isset($request->jenis_id)){
-                $bumdes->jenis()->sync($request->jenis_id);
-            } else{
-                $bumdes->jenis()->sync(array());
+                $file = $request->file('logo')->store('Logo', 'public');
+                $bumdes->logo = $file;
             }
+            $bumdes->save();
+            Auth::login($bumdes);
             return redirect()->route('profil', $bumdes)->with('sukses','Bumdes Berhasil Dipdate');
         }
         else{
@@ -216,9 +215,21 @@ class ProfilBumdesController extends Controller
     public function destroy($id)
     {
         if (Auth::user()->hasRole('admin')){
-            $bumdes = ProfilBumdes::find($id);
+            $bumdes = User::find($id);
             $bumdes->delete();
             return response()->json($bumdes);
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
+    }
+
+    public function profil(Request $request)
+    {
+        if (Auth::user()->hasRole('bumdes')){
+            $bumdes = User::find(Auth::user()->id);
+            $bumdes_foto = Foto::where('user_id', Auth::user()->id)->first();
+            return view('bumdes.show', compact('bumdes', 'bumdes_foto'));
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);

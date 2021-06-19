@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\ProfilBumdes;
+use App\Models\JenisUsaha;
 use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Carbon;
 use DataTables;
 
 class UserController extends Controller
@@ -24,13 +27,30 @@ class UserController extends Controller
                 $data = User::all();
                 return Datatables::of($data)
                         ->addIndexColumn()
+                        ->addColumn('role', function($data){
+                            return json_decode($data->getRoleNames());
+                        })
+                        ->addColumn('status', function($data){
+                            if (Cache::has('is_online'.$data->id)){
+                               $status = '<div class="badge badge-success">Online</div>';
+                               return $status;
+                            }
+                            else{
+                                $status = '<div class="badge badge-danger">Offline</div>';
+                               return $status;
+                            }
+                        })
+                        ->addColumn('last_seen', function($data){
+                            $lastSeen = Carbon::parse($data->last_seen);
+                            return $lastSeen;
+                        })
                         ->addColumn('action', function($row){
                                $btn = '<a href="javascript:void(0)" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editUser"><i class="metismenu-icon pe-7s-pen"></i></a>';
                                $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteUser"><i class="metismenu-icon pe-7s-trash"></i></a>';
         
                                 return $btn;
                         })
-                        ->rawColumns(['action'])
+                        ->rawColumns(['action','status'])
                         ->make(true);
             }
             return view('user.index');
@@ -81,9 +101,15 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request)
     {
-        return response()->view('errors.404', [abort(404)], 404);
+        if (Auth::user()->hasRole('bumdes')){
+            $bumdes = User::find(Auth::user()->id);
+            return view('bumdes.show', compact('bumdes'));
+        }
+        else{
+            return response()->view('errors.403', [abort(403)], 403);
+        }
     }
 
     /**
@@ -118,9 +144,11 @@ class UserController extends Controller
                 'new_password' => ['required'],
                 'confirm_password' => ['same:new_password']
             ]);
-            User::find(Auth::user()->id)->update(['password' => Hash::make($request->new_password)]);
-            $id_user = ProfilBumdes::find(Auth::user()->profil_bumdes_id);
-            return view('profil', $id_user);
+            $bumdes = User::findOrFail(Auth::user()->id);
+            $bumdes->password = Hash::make($request->new_password);
+            $bumdes->save();
+            Auth::login($bumdes);
+            return redirect()->route('profil', $bumdes)->with('sukses','Password Berhasil Dipdate');
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);

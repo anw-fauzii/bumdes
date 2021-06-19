@@ -14,7 +14,7 @@ class JenisUsaha extends Model
         'nama_jenis_usaha'
     ];
 
-    public function bumdes(){
-        return $this->belongsToMany(ProfilBumdes::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

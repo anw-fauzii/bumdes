@@ -36,7 +36,16 @@
                                 <div class="col-md-6">
                                     <div class="main-card mb-3 card">
                                         <div class="card-body">
-                                        <input type="hidden" name="kabupaten_id" value="{{$kabupaten->id}}">
+                                            <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="kabupaten_id">Kaubpaten</label>
+                                                <div class="col-sm-8">
+                                                    <select name="kabupaten_id" id="kabupaten_id" type="select" class="custom-select" class="form-control">
+                                                        <option disable="true" selected="true" disabled>--- Pilih Kabupaten ---</option>
+                                                        @foreach ($kabupaten as $row)
+                                                            <option value="{{ $row->id }}"{{ old($row->id) }}>{{ ucfirst($row->nama) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="position-relative row form-group"><label class="col-sm-4 col-form-label" for="nama">Kecamatan</label>
                                                 <div class="col-sm-8"><input placeholder="Masukan Nama Kecamatan" type="text" name="nama" value="{{ old('nama') }}" class="form-control">
                                                     </div>

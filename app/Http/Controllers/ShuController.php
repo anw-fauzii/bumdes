@@ -111,7 +111,6 @@ class ShuController extends Controller
     public function show(Request $request, $id)
     {
         if (Auth::user()->hasRole('bumdes')){
-            $bumdes = ProfilBumdes::findOrFail($id);
             if ($request->ajax()) {
                 $data = Shu::where('bumdes_id', "$id")->get();
                 return Datatables::of($data)
@@ -125,7 +124,7 @@ class ShuController extends Controller
                         ->rawColumns(['action'])
                         ->make(true);
             }
-            return view('shu.index', compact('bumdes'));
+            return view('shu.index');
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);

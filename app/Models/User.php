@@ -40,6 +40,7 @@ class User extends Authenticatable
         'long',
         'kontak',
         'logo',
+        'ketua'
     ];
 
     /**
@@ -69,11 +70,26 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'profile_photo_url',
+        'profile_photo_url'
     ];
 
-    public function bumdes(){
-        return $this->belongsTo(ProfilBumdes::class, 'profil_bumdes_id');
+    public function jenis(){
+        return $this->hasMany(JenisUsaha::class);
     }
 
+    public function foto(){
+        return $this->hasMany(Foto::class);
+    }
+
+    public function shu(){
+        return $this->hasMany(Shu::class);
+    }
+
+    public function kecamatan(){
+        return $this->belongsTo(Kecamatan::class);
+    }
+
+    public function kabupaten(){
+        return $this->belongsTo(Kabupaten::class);
+    }
 }

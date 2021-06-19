@@ -1,6 +1,6 @@
 <div class="app-header header-shadow">
     <div class="app-header__logo">
-        <div class="logo-src"><img src="{{asset('storage/logo/logo.png')}}" width="150px"></div>
+        <div class="logo-src mb-4"><img src="{{asset('storage/logo.png')}}"  width="130px"></div>
             <div class="header__pane ml-auto">
                 <div>
                     <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -37,17 +37,17 @@
                                 <div class="widget-content-left">                             
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            @if(Auth::user()->profile_photo_path == NULL)
+                                            @if(Auth::user()->logo == NULL)
                                             <img width="42" class="rounded-circle" src="{{asset('storage/user.png')}}" alt="">
                                             @else
-                                            <img width="42" class="rounded-circle" src="{{asset('storage/'. Auth::user()->profile_photo_path)}}" alt="">
+                                            <img width="42" class="rounded-circle" src="{{asset('storage/'. Auth::user()->logo)}}" alt="">
                                             @endif
                                         </a>
                                     </div>
                                 </div>
                                 <div class="widget-content-right ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        <strong>{{ Auth::user()->name }}</strong>
+                                        <strong>{{ Auth::user()->nama }}</strong>
                                     </div>
                                     <div class="widget-subheading">
                                         {{ Auth::user()->email }}    

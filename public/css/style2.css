@@ -452,7 +452,7 @@ section {
   padding-bottom: 0;
   line-height: 1px;
   margin-bottom: 15px;
-  color: #c2b7b1;
+  color: #000000;
 }
 
 .section-title p {
@@ -1171,7 +1171,7 @@ section {
   padding: 0 0 30px 0;
   color: #212529;
   font-size: 14px;
-  background: #fef8f5;
+  background: #fff;
 }
 
 #footer .footer-newsletter {

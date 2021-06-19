@@ -24,13 +24,13 @@
             <div class="mb-3 card">
                 <div class="card-header-tab card-header-tab-animation card-header">
                     <div class="card-header-title">
-                        FORM INPUT
+                        Success!
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="card-body">
-                            <div id="container"></div>
+                            <div id="container">You Loggin in as {{$user}}</div>
                         </div>
                     </div>
                 </div> 
@@ -38,54 +38,4 @@
         </div>    
     </div>
 </div>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script type="text/javascript">
-    var userData = <?php echo json_encode($userData, JSON_NUMERIC_CHECK)?>;
-    var bulan = <?php echo $bulan ?>;
-    Highcharts.chart('container', {
-        chart: {
-            type: 'areaspline'
-        },
-        title: {
-            text: 'Sisa Hasil Usaha'
-        },
-        xAxis: {
-            categories: bulan
-        },
-        yAxis: {
-            title: {
-                text: 'Nilai Sisa Hasil Usaha'
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
-        },
-        plotOptions: {
-            series: {
-                allowPointSelect: true
-            }
-        },
-        series: [{
-            name: 'Nilai',
-            data: userData
-        }],
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
-    });
-
-</script>
 @endsection

@@ -54,7 +54,7 @@ $(function () {
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'nama', name: 'nama'},
-            {data: 'jumlah', render: function(data, row, row){return data +' Bumdes';}, name: 'jumlah'},
+            {data: 'jumlah', name: 'jumlah'},
             {data: 'lat', name: 'lat'},
             {data: 'long', name: 'long'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

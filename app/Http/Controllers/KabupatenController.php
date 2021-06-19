@@ -20,20 +20,20 @@ class KabupatenController extends Controller
     {
         if (Auth::user()->hasRole('admin')){
             if ($request->ajax()) {
-                $data = Kabupaten::with('bumdes')->get();
+                $data = Kabupaten::with('kecamatan')->get();
                 return Datatables::of($data)
                         ->addIndexColumn()
                         ->addColumn('jumlah', function($data) {
-                            return $data->bumdes->count();
+                            $btn = '<a href="'.route('kecamatan.show', $data->id).'" data-toggle="tooltip" title="Lihat Kecamatan" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm">Jumlah Kecamatan, '.$data->kecamatan->count().' Kecamatan</a>';
+                            return $btn;
                             })
                         ->addColumn('action', function($row){
-                            $btn = '<a href="'.route('kecamatan.show', $row->id).'" data-toggle="tooltip" title="Lihat Kecamatan" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editKecamatan"><i class="metismenu-icon pe-7s-info"></i></a>';
-                            $btn = $btn.' <a href="'.route('kabupaten.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKabupaten"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                            $btn = '<a href="'.route('kabupaten.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKabupaten"><i class="metismenu-icon pe-7s-pen"></i></a>';
                             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKabupaten"><i class="metismenu-icon pe-7s-trash"></i></a>';
         
                                 return $btn;
                         })
-                        ->rawColumns(['action'],['jumlah'])
+                        ->rawColumns(['action', 'jumlah'])
                         ->make(true);
             }
             return view('kabupaten.index');

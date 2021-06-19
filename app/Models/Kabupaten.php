@@ -14,6 +14,10 @@ class Kabupaten extends Model
     ];
 
     public function bumdes(){
-        return $this->hasMany(ProfilBumdes::class,'kabupaten_id', 'id');
+        return $this->hasMany(User::class,'kabupaten_id', 'id');
+    }
+
+    public function kecamatan(){
+        return $this->hasMany(Kecamatan::class,'kabupaten_id', 'id');
     }
 }

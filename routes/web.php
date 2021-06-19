@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfilBumdesController;
 use App\Http\Controllers\JenisUsahaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +28,12 @@ Route::get('/cari/{id}', [ShuController::class, 'cari']);
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('dashboard',[HomeController::class,'index'])->name('dashboard');
 
+Route::get('tentang',[HomeController::class,'tentang'])->name('tentang');
 Route::resource('kabupaten', KabupatenController::class);
 Route::resource('bumdes', ProfilBumdesController::class);
-Route::get('profil/{id}',[ProfilBumdesController::class,'profil'])->name('profil');
+Route::get('profil',[ProfilBumdesController::class,'profil'])->name('profil');
 Route::resource('kecamatan', KecamatanController::class);
 Route::resource('user', UserController::class);
 Route::resource('shu', ShuController::class);
-Route::get('kecamatan/create/{id}', [KecamatanController::class,'create'])->name('kecamatan.create');
-Route::get('bumdes/create/{id}', [ProfilBumdesController::class,'create'])->name('bumdes.create');
+Route::resource('foto', FotoController::class);
 Route::resource('jenisUsaha', JenisUsahaController::class);

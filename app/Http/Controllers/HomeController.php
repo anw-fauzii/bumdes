@@ -17,33 +17,18 @@ class HomeController extends Controller
     
     public function index()
     {
-        $userData = Shu::where('bumdes_id', Auth::user()->profil_bumdes_id)->selectRaw('SUM(nilai) as total')
-                    ->groupByRaw('MONTH(created_at)')
-                    ->pluck('total');
-        $bulan = Shu::where('bumdes_id', Auth::user()->profil_bumdes_id)->selectRaw('MONTH(created_at) as bulan')
-                    ->groupByRaw('bulan')
-                    ->pluck('bulan');
-    	return view('dashboard',compact('userData','bulan'));
+        if (Auth::user()->hasRole('bumdes')){
+            $user="Bumdes";
+        }
+        else{
+            $user="Admin";
+        }
+    	return view('dashboard', compact('user'));
     }
 
     public function home(Request $request){
-        $namaKab = Kabupaten::pluck('nama', 'id');
-        $jenis = JenisUsaha::pluck('nama', 'id');
-        $kabupaten = $request->get('kabupaten');
-        $kecamatan = $request->get('kecamatan');
-        if (!empty($kabupaten) && !empty($kecamatan)){
-            $bumdes = ProfilBumdes::where('kecamatan_id', "$kecamatan")->get();
-        }
-        elseif (!empty($kabupaten)){
-            $bumdes = ProfilBumdes::where('kabupaten_id', "$kabupaten")->get();
-        }
-        elseif (!empty($kecamatan)){
-            $bumdes = ProfilBumdes::where('kecamatan_id', "$kecamatan")->get();
-        }
-        else{
-            $bumdes = ProfilBumdes::with('jenis')->get();
-        }
-        return view('welcome', compact('bumdes','namaKab','jenis'));
+        $bumdes = User::role('bumdes')->with('foto')->get();
+        return view('welcome', compact('bumdes'));
     }
 
     public function store($id)
@@ -51,5 +36,10 @@ class HomeController extends Controller
         $namaKec = Kecamatan::where('kabupaten_id', "$id")
             ->pluck('nama', 'id');
             return json_encode($namaKec);
+    }
+
+    public function tentang()
+    {
+        return view('profile.tentang');
     }
 }

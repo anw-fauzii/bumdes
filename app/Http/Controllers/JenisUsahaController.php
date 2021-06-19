@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\JenisUsaha;
+use App\Models\Shu;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DataTables;
@@ -16,25 +18,9 @@ class JenisUsahaController extends Controller
      */
     public function index(Request $request)
     {
-        if (Auth::user()->hasRole('admin')){
-            if ($request->ajax()) {
-                $data = JenisUsaha::all();
-                return Datatables::of($data)
-                        ->addIndexColumn()
-                        ->addColumn('action', function($row){
-                               $btn = '<a href="javascript:void(0)" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editJenisUsaha"><i class="metismenu-icon pe-7s-pen"></i></a>';
-                               $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteJenisUsaha"><i class="metismenu-icon pe-7s-trash"></i></a>';
-        
-                                return $btn;
-                        })
-                        ->rawColumns(['action'])
-                        ->make(true);
-            }
-            return view('jenisUsaha.index');
-        }
-        else{
-            return response()->view('errors.403', [abort(403)], 403);
-        }
+        $user = User::find(Auth::user()->id);
+        $shu = Shu::where('user_id', Auth::user()->id)->get();
+        return view('jenisUsaha.index', compact('user','shu'));
     }
 
     /**
@@ -44,7 +30,7 @@ class JenisUsahaController extends Controller
      */
     public function create()
     {
-        return response()->view('errors.404', [abort(404)], 404);
+        
     }
 
     /**
@@ -55,12 +41,16 @@ class JenisUsahaController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->hasRole('admin')){
-            $jenis = JenisUsaha::updateOrCreate(
-                ['id' => $request->jenis_id],
-                ['nama' => $request->nama]
-            );
-            return response()->json($jenis);
+        if (Auth::user()->hasRole('bumdes')){
+            $user = User::findOrFail(Auth::user()->id);
+            $user->jenis_usaha = json_encode($request->get('nama_jenis_usaha'));
+            $user->status = $request->get('status');
+            $user->save();
+            if (!empty($request->status)){
+                $shu = Shu::create($request->all());
+            }
+
+            return redirect()->route('jenisUsaha.index')->with('sukses','Sisa Hasil Usaha Berhasil Dipdate');
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
