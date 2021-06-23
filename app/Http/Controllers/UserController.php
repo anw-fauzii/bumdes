@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Foto;
 use App\Models\ProfilBumdes;
 use App\Models\JenisUsaha;
 use App\Rules\MatchOldPassword;
@@ -84,7 +85,7 @@ class UserController extends Controller
                 [
                     'nama' => $request->nama ,
                     'email' => $request->email,
-                    'password' => Hash::make("12345678")
+                    'password' => Hash::make("12345678"),
                 ]
             );
             if($request->role == "admin")
@@ -93,7 +94,15 @@ class UserController extends Controller
             }
             else
             {
+                $id = User::max('id');
+                ProfilBumdes::create([
+                    'user_id' => $id
+                ]);
+                Foto::create([
+                    'user_id' => $id
+                ]);
                 $user->assignRole('bumdes');
+                            
             }
             return response()->json($user);
         }
@@ -127,8 +136,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->hasRole('bumdes')){
-            $user = User::find($id);
+        if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('bumdes')){
+            $user = User::find(Auth::user()->id);
             return view('user.edit');
         }
         else{
@@ -145,7 +154,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::user()->hasRole('bumdes')){
+        if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('bumdes')){
             $request->validate([
                 'old_password' => ['required', new MatchOldPassword],
                 'new_password' => ['required'],

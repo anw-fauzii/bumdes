@@ -33,11 +33,11 @@
                             <a class="btn btn-info" href="{{route('bumdes.edit', Auth::user()->id)}}"><i class="metismenu-icon pe-7s-note2"></i> Update Profil</a>
                         </div>
                         <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 text-center">
                                     @if(Auth::user()->logo == NULL)
-                                    <img class="d-block w-100" src="{{asset('storage/user.png')}}" alt="First slide">
+                                    <img width="80%" src="{{asset('storage/user.png')}}" alt="First slide">
                                     @else
-                                    <img class="d-block w-100" src="{{asset('storage/'. $bumdes->logo)}}" alt="First slide">
+                                    <img width="80%" src="{{asset('storage/'. $bumdes->logo)}}" alt="First slide">
                                     @endif
                                 </div>
                                 <div class="col-md-8">

@@ -57,7 +57,18 @@
           <li><a class="nav-link scrollto" href="#beranda">Beranda</a></li>
           <li><a class="nav-link scrollto" href="#peta">Peta</a></li>
           <li><a class="nav-link scrollto" href="#tentang">Tentang</a></li>
-          <li><a class="getstarted scrollto" href="{{route('login')}}">Login</a></li>
+          @if (Route::has('login'))
+                    @auth
+                    @role('admin')
+                    <li><a class="getstarted scrollto" href="{{route('bumdes.index')}}">Bumdes</a></li>
+                    @endrole
+                    @role('bumdes')
+                    <li><a class="getstarted scrollto" href="{{route('profil')}}">Profil</a></li>
+                    @endrole
+                    @else
+                      <li><a class="getstarted scrollto" href="{{route('login')}}">Login</a></li>
+                    @endauth
+            @endif
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -99,8 +110,19 @@
                     <tr>
                       <td>{{$no++}}</td>
                       <td>{{$row->nama}}</td>
-                      <td>{{$row->desa}}</td>
-                      <td>{{$row->kecamatan->nama}}</td>
+                      <td>
+                      @if($row->desa != NULL)
+                      {{$row->desa}}
+                      @else
+                      Belum Diupdate
+                      @endif</td>
+                      <td>
+                      @if($row->jenis_usaha != NULL)
+                        {{$row->kecamatan->nama}}
+                      @else
+                      Belum Diupdate
+                      @endif
+                      </td>
                       <td>
                       @if($row->jenis_usaha != NULL)
                         @foreach (json_decode($row->jenis_usaha) as $jenis)
@@ -111,8 +133,20 @@
                       Belum Diupdate
                       @endif
                       </td>
-                      <td>{{$row->tahun}}</td>
-                      <td>{{$row->status}}</td>
+                      <td>
+                      @if($row->tahun != NULL)
+                      {{$row->tahun}}
+                      @else
+                      Belum Diupdate
+                      @endif
+                      </td>
+                      <td>
+                      @if($row->status != NULL)
+                      {{$row->status}}
+                      @else
+                      Belum Diupdate
+                      @endif
+                      </td>
                       <td>
                         
                         <button type="button" class="btn btn-primary showDetail"
@@ -124,22 +158,15 @@
                           data-email="{{$row->email}}"
                           data-perdes="{{$row->perdes}}"
                           data-foto1="
-                          @foreach($row->foto as $foto)
-                          {{asset('storage/'. $foto->foto1)}}
-                          @endforeach" 
+                          {{asset('storage/'. $row->foto1)}}" 
                           data-foto2="
-                          @foreach($row->foto as $foto)
-                          {{asset('storage/'. $foto->foto2)}}
-                          @endforeach"
+                          {{asset('storage/'. $row->foto2)}}" 
                           data-foto3="
-                          @foreach($row->foto as $foto)
-                          {{asset('storage/'. $foto->foto3)}}
-                          @endforeach"
+                          {{asset('storage/'. $row->foto3)}}" 
                           data-foto4="
-                          @foreach($row->foto as $foto)
-                          {{asset('storage/'. $foto->foto4)}}
-                          @endforeach"
+                          {{asset('storage/'. $row->foto4)}}" 
                           data-logo="{{asset('storage/'. $row->logo)}}"
+                          data-logonull="{{asset('storage/user.png')}}"
                           
                           data-toggle="modal" data-target="#exampleModal">Detail
                         </button>
@@ -388,7 +415,8 @@
               lat = $(this).attr('data-lat'),
               long = $(this).attr('data-long'),
               email = $(this).attr('data-email'),
-              perdes = $(this).attr('data-perdes')
+              perdes = $(this).attr('data-perdes'),
+              logonull = $(this).attr('data-logonull')
               ;
               $("#ketua").html(ketua);
               $("#kontak").html(kontak);
@@ -398,6 +426,7 @@
               $("#perdes").html(perdes);
               $("#latitude").val(lat);
               $("#longitude").val(long);
+              $("#logonull").text(logonull);
               $('#logo').attr('src', $(this).attr('data-logo'));
               $('#foto1').attr('src', $(this).attr('data-foto1')); 
               $('#foto2').attr('src', $(this).attr('data-foto2'));

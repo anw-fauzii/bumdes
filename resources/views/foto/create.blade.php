@@ -32,7 +32,6 @@
                             @method('put')
                             <div class="row">
                                 <div class="col-md-6">
-                                <input type="text" name="id" value="{{$foto->id}}">
                                     <div class="main-card mb-3 card">
                                         <div class="card-body"><h5 class="card-title text-center mb-4">Foto 1</h5>
                                         <div class="col-md-12 mb-2 text-center">

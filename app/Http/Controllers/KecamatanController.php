@@ -18,6 +18,7 @@ class KecamatanController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->hasRole('admin')){
+            $kab = NULL;
             if ($request->ajax()) {
                 $data = Kecamatan::with('bumdes')->orderBy('kabupaten_id')->orderBy('nama')->get();
                 return Datatables::of($data)
@@ -35,7 +36,7 @@ class KecamatanController extends Controller
                         ->rawColumns(['action','jumlah'])
                         ->make(true);
             }
-            return view('kecamatan.index');
+            return view('kecamatan.index', compact('kab'));
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -85,7 +86,7 @@ class KecamatanController extends Controller
     public function show(Request $request, $id)
     {
         if (Auth::user()->hasRole('admin')){
-            $kabupaten = Kabupaten::findOrFail($id);
+            $kab = Kabupaten::findOrFail($id);
             if ($request->ajax()) {
                 $data = Kecamatan::with('bumdes')->where('kabupaten_id', "$id")->orderBy('nama')->get();
                 return Datatables::of($data)
@@ -103,7 +104,7 @@ class KecamatanController extends Controller
                         ->rawColumns(['action','jumlah'])
                         ->make(true);
             }
-            return view('kecamatan.index',compact('kabupaten'));
+            return view('kecamatan.index',compact('kab'));
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);

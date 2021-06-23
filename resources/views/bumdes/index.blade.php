@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    <title>Kabupaten</title>
+    <title>Bumdes</title>
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
                 <div class="page-title-icon">
                     <i class="pe-7s-culture icon-gradient bg-mean-fruit"></i>
                 </div>
-                <div><h3>Daftar Bumdes</h3>
+                <div><h3>Daftar Bumdes @if($kec != NULL) {{$kec->nama}} @endif</h3>
                 </div>
             </div>  
         </div> 
@@ -20,11 +20,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mb-3 card">
-                <div class="card-header-tab card-header-tab-animation card-header">
-                    <div class="btn-actions-pane-left">
-                    <a class="btn btn-success" href="{{route('bumdes.create')}}"><i class="metismenu-icon pe-7s-note"></i> Tambah Bumdes</a>        
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="table-responsive">

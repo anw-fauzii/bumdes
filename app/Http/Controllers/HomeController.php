@@ -18,6 +18,13 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole('bumdes')){
+            $bumdes = ProfilBumdes::where("rtrw", NULL)->where("user_id",Auth::user()->id)
+            ->join('users','bumdes.user_id','=','users.id')->first();
+            if($bumdes){
+                $namaKab = Kabupaten::pluck('nama', 'id');
+                $namaKec = Kecamatan::pluck('nama', 'id');
+                return view('bumdes.edit',compact('bumdes','namaKab','namaKec'));
+            }
             $user="Bumdes";
         }
         else{
@@ -27,7 +34,9 @@ class HomeController extends Controller
     }
 
     public function home(Request $request){
-        $bumdes = User::role('bumdes')->with('foto')->get();
+        $bumdes = User::role('bumdes')->join('foto','users.id','=','foto.user_id')
+        ->join('bumdes','bumdes.user_id','=','users.id')
+        ->get();
         return view('welcome', compact('bumdes'));
     }
 

@@ -29,19 +29,9 @@ class User extends Authenticatable
     protected $fillable = [
         'nama',
         'email',
-        'rtrw',
-        'dusun',
-        'desa',
-        'kecamatan_id',
-        'kabupaten_id',
-        'perdes',
-        'tahun',
-        'lat',
-        'long',
-        'kontak',
-        'logo',
-        'ketua',
-        'password'
+        'bumdes_id',
+        'password',
+        'logo'
     ];
 
     /**
@@ -79,7 +69,7 @@ class User extends Authenticatable
     }
 
     public function foto(){
-        return $this->hasMany(Foto::class);
+        return $this->belongsTo(Foto::class);
     }
 
     public function shu(){
@@ -92,5 +82,9 @@ class User extends Authenticatable
 
     public function kabupaten(){
         return $this->belongsTo(Kabupaten::class);
+    }
+
+    public function bumdes(){
+        return $this->belongsTo(ProfilBumdes::class);
     }
 }

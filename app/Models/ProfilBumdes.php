@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class ProfilBumdes extends Model
 {
     use HasFactory;
-    protected $table ="profil_bumdes";
+    protected $table ="bumdes";
     protected $fillable =[
-        'nama', 
-        'kabupaten_id',
-        'kecamatan_id',
-        'alamat',
+        'user_id',
+        'rtrw',
+        'dusun',
         'desa',
-        'telepon',
+        'kecamatan_id',
+        'kabupaten_id',
+        'perdes',
+        'tahun',
         'lat',
         'long',
-        'logo',
-        'foto1',
-        'foto2',
-        'foto3',
+        'kontak',
+        'ketua',
     ];
     public function kabupaten(){
         return $this->belongsTo(Kabupaten::class);

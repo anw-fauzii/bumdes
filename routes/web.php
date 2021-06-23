@@ -25,15 +25,17 @@ Route::get('/', [HomeController::class, 'home'])->name('welcome');
 Route::get('/kec/{id}', [HomeController::class, 'store']);
 Route::get('/cari/{id}', [ShuController::class, 'cari']);
 
-Route::middleware(['auth:sanctum', 'verified'])
-    ->get('dashboard',[HomeController::class,'index'])->name('dashboard');
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () { 
+    Route::middleware(['auth:sanctum', 'verified'])
+        ->get('dashboard',[HomeController::class,'index'])->name('dashboard');
 
-Route::get('tentang',[HomeController::class,'tentang'])->name('tentang');
-Route::resource('kabupaten', KabupatenController::class);
-Route::resource('bumdes', ProfilBumdesController::class);
-Route::get('profil',[ProfilBumdesController::class,'profil'])->name('profil');
-Route::resource('kecamatan', KecamatanController::class);
-Route::resource('user', UserController::class);
-Route::resource('shu', ShuController::class);
-Route::resource('foto', FotoController::class);
-Route::resource('jenisUsaha', JenisUsahaController::class);
+    Route::get('tentang',[HomeController::class,'tentang'])->name('tentang');
+    Route::resource('kabupaten', KabupatenController::class);
+    Route::resource('bumdes', ProfilBumdesController::class);
+    Route::get('profil',[ProfilBumdesController::class,'profil'])->name('profil');
+    Route::resource('kecamatan', KecamatanController::class);
+    Route::resource('user', UserController::class);
+    Route::resource('shu', ShuController::class);
+    Route::resource('foto', FotoController::class);
+    Route::resource('jenisUsaha', JenisUsahaController::class);
+});

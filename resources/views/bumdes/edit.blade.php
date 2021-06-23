@@ -22,7 +22,7 @@
             <div class="mb-3 card">
                 <div class="card-header-tab card-header-tab-animation card-header">
                     <div class="card-header-title">
-                        Input Profil Bumdes
+                        Perbarui Profil Bumdes
                     </div>
                 </div>
                 <div class="card-body">
@@ -55,7 +55,7 @@
                                     <div class="main-card mb-3 card">
                                         <div class="card-body"><h5 class="card-title text-center mb-4">Informasi Dasar</h5>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Nama BUMDes</label>
-                                                <div class="col-sm-9"><input placeholder="Masukan Nama BUMDes" type="text" name="nama" value="{{ $bumdes->nama }}" class="form-control">
+                                                <div class="col-sm-9"><input placeholder="Masukan Nama BUMDes" type="text" name="nama" value="{{ $bumdes->user->nama }}" class="form-control">
                                                     </div>
                                             </div>
                                             <div class="position-relative row form-group"><label class="col-sm-3 col-form-label" for="nama">Kabupaten</label>

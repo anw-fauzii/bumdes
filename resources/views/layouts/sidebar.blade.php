@@ -35,7 +35,7 @@
                 <li class="app-sidebar__heading">Menu Utama</li>
                 @role('admin')
                 <li>
-                    <a href="/dashboard">
+                    <a href="/">
                         <i class="metismenu-icon pe-7s-home"></i>
                             Beranda
                     </a>
@@ -84,26 +84,13 @@
                             Profil
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('user.edit', Auth::user()->id) }}">
-                        <i class="metismenu-icon pe-7s-settings"></i>
-                            Akun
-                    </a>
-                </li>
                 @endrole
                 <li>
                     <a href="{{ route('tentang') }}">
                         <i class="metismenu-icon pe-7s-info"></i>
                             Tentang
                     </a>
-                </li>
-                <li>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"> <i class="metismenu-icon pe-7s-power"></i>Keluar</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </li>      
+                </li>     
             </ul>
         </div>
     </div>

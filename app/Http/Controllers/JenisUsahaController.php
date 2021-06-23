@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JenisUsaha;
+use App\Models\ProfilBumdes;
 use App\Models\Shu;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class JenisUsahaController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = ProfilBumdes::where('user_id', Auth::user()->id)->first();
         $shu = Shu::where('user_id', Auth::user()->id)->get();
         return view('jenisUsaha.index', compact('user','shu'));
     }
@@ -42,8 +43,8 @@ class JenisUsahaController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->hasRole('bumdes')){
-            $user = User::findOrFail(Auth::user()->id);
-            $user->jenis_usaha = json_encode($request->get('nama_jenis_usaha'));
+            $user = ProfilBumdes::where('user_id', Auth::user()->id)->first();
+            $user->jenis_usaha  = json_encode($request->get('nama_jenis_usaha'));
             $user->status = $request->get('status');
             $user->save();
             if (!empty($request->status)){
