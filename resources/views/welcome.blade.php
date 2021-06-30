@@ -66,7 +66,10 @@
                     <li><a class="getstarted scrollto" href="{{route('profil')}}">Profil</a></li>
                     @endrole
                     @else
-                      <li><a class="getstarted scrollto" href="{{route('login')}}">Login</a></li>
+                      <li><button type="button" class="getstarted showlogin"
+                          
+                          data-toggle="modal" data-target="#loginModal">Login
+                        </button></li>
                     @endauth
             @endif
         </ul>
@@ -76,11 +79,13 @@
     </div>
   </header><!-- End Header -->
   <main id="main">
-
+ 
   <!-- ======= data Us Section ======= -->
   <section id="beranda" class="contact section-bg">
       <div class="container" data-aos="fade-up">
-
+      <div class="section-title text-right">
+      <x-jet-validation-errors />
+        </div>
         <div class="section-title text-left">
           <h5><strong>Sistem Informasi Keberadaan</strong></h5>
           <h3><strong>BADAN USAHA MILIK DESA (BUMDes)</strong></h3>
@@ -184,6 +189,7 @@
       </div>
     </section><!-- End data Us Section -->
     @include('detail')
+    @include('login')
 
 <!-- ======= Contact Us Section ======= -->
   <section id="peta" class="contact">
@@ -435,6 +441,11 @@
               $('#exampleModal').appendTo('body');
           });
         });
+        $(document).ready(function(){
+          $(document).on('click','.showLogin', function(){
+              $('#loginModal').appendTo('body');
+          });
+        });
       </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7FALA_C8nQFFy1A8D6NWavSyS_rqIBc&callback=myMap"> $.noConflict();</script>
@@ -444,6 +455,9 @@
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
       $.noConflict();
        $(document).ready(function() {
@@ -456,5 +470,10 @@
     $('#dummyModal').modal('show');
   });
 });
+    </script>
+    <script>
+    @if (session('sukses'))
+        Swal.fire("Sukses", "{{Session::get('sukses')}}", "success");;
+    @endif
     </script>
 </html>
