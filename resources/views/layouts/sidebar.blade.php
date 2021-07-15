@@ -67,7 +67,7 @@
                 @endrole 
                 @role('bumdes')
                 <li>
-                    <a href="/dashboard">
+                    <a href="/">
                         <i class="metismenu-icon pe-7s-home"></i>
                             Beranda
                     </a>

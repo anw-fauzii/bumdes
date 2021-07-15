@@ -9,12 +9,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="card-header">
-                    <ul class="nav nav-justified">
-                        <li class="nav-item"><a data-toggle="tab" href="#detail" class="active nav-link">Detail</a></li>
-                        <li class="nav-item"><a data-toggle="tab" href="#foto" class="nav-link">Foto Bumdes</a></li>
-                    </ul>
-                </div>
+            <div class="card-header">
+                <ul class="nav nav-justified">
+                    <li class="nav-item"><a data-toggle="tab" href="#detail" class="active nav-link">Informasi Bumdes</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#foto" class="nav-link">Foto Bumdes</a></li>
+                </ul>
+            </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="detail" role="tabpanel">
@@ -61,16 +61,16 @@
                             <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner text-center">
                                     <div class="carousel-item active">
-                                        <img id="foto1" width="60%" alt="First slide">
+                                        <img id="foto1" width="60%" alt="Foto Belum Di Update">
                                     </div>
                                     <div class="carousel-item">
-                                        <img id="foto2" width="60%" alt="Second slide">
+                                        <img id="foto2" width="60%" alt="Foto Belum Di Update">
                                     </div>
                                     <div class="carousel-item">
-                                        <img id="foto3" width="60%" alt="Third slide">
+                                        <img id="foto3" width="60%" alt="Foto Belum Di Update">
                                     </div>
                                     <div class="carousel-item">
-                                        <img id="foto4" width="60%" alt="Forth slide">
+                                        <img id="foto4" width="60%" alt="Foto Belum Di Update">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleControls1" role="button" data-slide="prev">

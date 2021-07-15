@@ -93,18 +93,118 @@
                         </div>
                         <div id="fotoBumdes" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner text-center">
+                                        @if($bumdes_foto->foto1 && $bumdes_foto->foto2 && $bumdes_foto->foto3 && $bumdes_foto->foto4)
+                                            <div class="carousel-item active">
+                                                <img id="logo" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
+                                            </div>
+                                        @elseif($bumdes_foto->foto1 && $bumdes_foto->foto2 && $bumdes_foto->foto3)
+                                            <div class="carousel-item active">
+                                                <img id="logo" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
+                                            </div>
+                                        @elseif($bumdes_foto->foto1 && $bumdes_foto->foto3 && $bumdes_foto->foto4)
+                                            <div class="carousel-item active">
+                                                <img id="logo" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
+                                            </div>
+                                        @elseif($bumdes_foto->foto1 && $bumdes_foto->foto2 && $bumdes_foto->foto4)
                                         <div class="carousel-item active">
-                                            <img id="logo" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
-                                        </div>
+                                                <img id="logo" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
+                                            </div>
+                                        @elseif($bumdes_foto->foto2 && $bumdes_foto->foto3 && $bumdes_foto->foto4)
+                                            <div class="carousel-item active">
+                                                <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
+                                            </div>
+                                        @elseif($bumdes_foto->foto1 && $bumdes_foto->foto2)
+                                            <div class="carousel-item active">
+                                                <img id="logo" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
+                                            </div>
+                                        @elseif($bumdes_foto->foto1 && $bumdes_foto->foto3)
+                                            <div class="carousel-item active">
+                                                <img id="logo" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
+                                            </div>
+                                        @elseif($bumdes_foto->foto1 && $bumdes_foto->foto4)
+                                            <div class="carousel-item active">
+                                                <img id="logo" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
+                                            </div>
+                                        @elseif($bumdes_foto->foto2 && $bumdes_foto->foto3)
+                                            <div class="carousel-item active">
+                                                <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
+                                            </div>
+                                        @elseif($bumdes_foto->foto2 && $bumdes_foto->foto4)
+                                            <div class="carousel-item active">
+                                                <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
+                                            </div>
+                                        @elseif($bumdes_foto->foto3 && $bumdes_foto->foto4)
+                                            <div class="carousel-item acive">
+                                                <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
+                                            </div>
+                                        @elseif($bumdes_foto->foto1)
+                                            <div class="carousel-item acive">
+                                                <img id="foto1" width="50%" src="{{asset('storage/'. $bumdes_foto->foto1)}}" alt="Foto Pertama">
+                                            </div>
+                                        @elseif($bumdes_foto->foto2)
+                                            <div class="carousel-item acive">
+                                                <img id="foto2" width="50%" src="{{asset('storage/'. $bumdes_foto->foto2)}}" alt="Foto Kedua">
+                                            </div>
+                                        @elseif($bumdes_foto->foto3)
+                                            <div class="carousel-item acive">
+                                                <img id="foto3" width="50%" src="{{asset('storage/'. $bumdes_foto->foto3)}}" alt="Foto Ketiga">
+                                            </div>
+                                        @elseif($bumdes_foto->foto4)
+                                            <div class="carousel-item acive">
+                                                <img id="foto4" width="50%" src="{{asset('storage/'. $bumdes_foto->foto4)}}" alt="Foto Keempat">
+                                            </div>
+                                        @endif
                                     </div>
                                     <a class="carousel-control-prev" href="#fotoBumdes" role="button" data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
