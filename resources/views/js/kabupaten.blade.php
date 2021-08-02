@@ -35,7 +35,7 @@ function myMap() {
         google.maps.event.addDomListener(window, 'load', initialize);
     }
 
-$(function () {
+$(document).ready(function(){
  
     $.ajaxSetup({
         headers: {
@@ -58,6 +58,54 @@ $(function () {
             {data: 'long', name: 'long'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
+    });
+
+    $('#createKab').click(function () {
+        $('#saveUser').val("create-kabupaten");
+        $('#kabupaten_id').val('');
+        $('#kabFormCreate').trigger("reset");
+        $('#modelHeading').html("Tambah Kabupaten");
+        $('#modalCreateKab').modal('show');
+        $('#modalCreateKab').appendTo('body');
+    });
+
+
+//SAVE & UPDATE User
+$('#saveUser').click(function (e) {
+        e.preventDefault();
+        $(this).html('Menyimpan..');
+        $.ajax({
+            data: $('#kabFormCreate').serialize(),
+            url: "{{ route('kabupaten.store') }}",
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                $('#kabFormCreate').trigger("reset");
+                $('#modalCreateKab').modal('hide');
+                $('#saveUser').html('<i class="metismenu-icon pe-7s-paper-plane"></i> Simpan');
+                tableKabupaten.draw();
+                Swal.fire("Sukes!", "Kabupaten Berhasil Disimpan!", "success");
+            },
+            error: function (data) {
+                console.log('Error:', data);
+                $('#saveUser').html('Simpan');
+            }
+        });
+    });
+
+//EDIT Jenis
+    $('body').on('click', '.editKabupaten', function () {
+        var kabupaten_id = $(this).data('id');
+        $.get("{{ route('kabupaten.index') }}" +'/' + kabupaten_id +'/edit', function (data) {
+            $('#modelHeading').html("Edit User");
+                $('#saveUser').val("edit-jenis");
+                $('#modalCreateKab').modal('show');
+                $('#modalCreateKab').appendTo('body');
+                $('#kabupaten_id').val(data.id);
+                $('#nama').val(data.nama);
+                $('#lat').val(data.lat);
+                $('#long').val(data.long);
+        })
     });
 
 //DELETE Kabupaten
@@ -85,4 +133,4 @@ $(function () {
         })
     });
 });
-</script>
+</script>   

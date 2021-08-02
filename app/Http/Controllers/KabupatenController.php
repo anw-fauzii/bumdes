@@ -24,11 +24,11 @@ class KabupatenController extends Controller
                 return Datatables::of($data)
                         ->addIndexColumn()
                         ->addColumn('jumlah', function($data) {
-                            $btn = '<a href="'.route('kecamatan.show', $data->id).'" data-toggle="tooltip" title="Lihat Kecamatan" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm">Jumlah Kecamatan, '.$data->kecamatan->count().' Kecamatan</a>';
+                            $btn = '<a href="'.route('kecamatan.show', $data->id).'" data-toggle="tooltip" title="Lihat Kecamatan" data-id="'.$data->id.'" data-original-title="Edit" class="btn btn-info btn-sm">Jumlah Kecamatan, '.$data->kecamatan->count().' Kecamatan</a>';
                             return $btn;
                             })
                         ->addColumn('action', function($row){
-                            $btn = '<a href="'.route('kabupaten.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKabupaten"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                            $btn = '<a href="javascript:void(0)" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-info btn-sm editKabupaten"><i class="metismenu-icon pe-7s-pen"></i></a>';
                             $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKabupaten"><i class="metismenu-icon pe-7s-trash"></i></a>';
         
                                 return $btn;
@@ -67,8 +67,15 @@ class KabupatenController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->hasRole('admin')){
-            $kabupaten = Kabupaten::create($request->all());
-            return redirect('kabupaten')->with('sukses','Kabupaten Berhasil Disimpan');
+            $kabupaten = Kabupaten::updateOrCreate(
+                ['id' => $request->kabupaten_id],
+                [
+                    'nama' => $request->nama,
+                    'lat' => $request->lat,
+                    'long' => $request->long
+                ]
+            );
+            return response()->json($kabupaten);
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -95,8 +102,8 @@ class KabupatenController extends Controller
     public function edit($id)
     {
         if (Auth::user()->hasRole('admin')){
-            $kabupaten = Kabupaten::findOrFail($id);
-            return view('kabupaten.edit',compact('kabupaten'));  
+            $kabupaten = Kabupaten::find($id);
+            return response()->json($kabupaten); 
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);

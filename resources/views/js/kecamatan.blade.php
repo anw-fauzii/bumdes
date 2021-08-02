@@ -61,6 +61,55 @@ $(function () {
         ]
     });
 
+    $('#createKab').click(function () {
+        $('#saveUser').val("create-kabupaten");
+        $('#kecamatan_id').val('');
+        $('#kabFormCreate').trigger("reset");
+        $('#modelHeading').html("Tambah Kecamatan");
+        $('#modalCreateKab').modal('show');
+        $('#modalCreateKab').appendTo('body');
+    });
+
+
+//SAVE & UPDATE User
+$('#saveUser').click(function (e) {
+        e.preventDefault();
+        $(this).html('Menyimpan..');
+        $.ajax({
+            data: $('#kabFormCreate').serialize(),
+            url: "{{ route('kecamatan.store') }}",
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                $('#kabFormCreate').trigger("reset");
+                $('#modalCreateKab').modal('hide');
+                $('#saveUser').html('<i class="metismenu-icon pe-7s-paper-plane"></i> Simpan');
+                tableKecamatan.draw();
+                Swal.fire("Sukes!", "Kecamatan Berhasil Disimpan!", "success");
+            },
+            error: function (data) {
+                console.log('Error:', data);
+                $('#saveUser').html('Simpan');
+            }
+        });
+    });
+
+//EDIT Jenis
+    $('body').on('click', '.editKecamatan', function () {
+        var kecamatan_id = $(this).data('id');
+        $.get("{{ route('kecamatan.index') }}" +'/' + kecamatan_id +'/edit', function (data) {
+            $('#modelHeading').html("Edit Kecamatan");
+                $('#saveUser').val("edit-jenis");
+                $('#modalCreateKab').modal('show');
+                $('#modalCreateKab').appendTo('body');
+                $('#kecamatan_id').val(data.id);
+                $('#nama').val(data.nama);
+                $('#kabupaten_id').val(data.kabupaten_id);
+                $('#lat').val(data.lat);
+                $('#long').val(data.long);
+        })
+    });
+
 //DELETE Kecamatan
     $('body').on('click', '.deleteKecamatan', function (){
         var kecamatan_id = $(this).data("id");

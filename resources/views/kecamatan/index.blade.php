@@ -21,7 +21,7 @@
         <div class="col-md-12">
             <div class="mb-3 card">
                 <div class="card-header-tab card-header-tab-animation card-header">
-                    <a class="btn btn-success" href="{{route('kecamatan.create')}}"><i class="metismenu-icon pe-7s-note"></i> Tambah Kecamatan</a>        
+                 <a class="btn btn-success" href="javascript:void(0)" id="createKab"><i class="metismenu-icon pe-7s-note"></i> Tambah Kecamatan</a>
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
@@ -45,5 +45,6 @@
         </div>    
     </div>
 </div>
-@include('js.kecamatan')      
+@include('js.kecamatan')
+@include('kecamatan.create')      
 @endsection

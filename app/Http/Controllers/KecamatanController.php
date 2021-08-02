@@ -19,16 +19,17 @@ class KecamatanController extends Controller
     {
         if (Auth::user()->hasRole('admin')){
             $kab = NULL;
+            $kabupaten = Kabupaten::pluck('nama','id');
             if ($request->ajax()) {
                 $data = Kecamatan::with('bumdes')->orderBy('kabupaten_id')->orderBy('nama')->get();
                 return Datatables::of($data)
                         ->addIndexColumn()
                         ->addColumn('jumlah', function($data) {
-                            $btn = '<a href="'.route('bumdes.show', $data->id).'" data-toggle="tooltip" title="Lihat Bumdes" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan">Jumlah BUMDes, '.$data->bumdes->count().' Bumdes</a>';
+                            $btn = '<a href="'.route('bumdes.show', $data->id).'" data-toggle="tooltip" title="Lihat Bumdes" data-id="'.$data->id.'" data-original-title="Edit" class="btn btn-info btn-sm">Jumlah BUMDes, '.$data->bumdes->count().' Bumdes</a>';
                             return $btn;
                          })
                         ->addColumn('action', function($row){
-                               $btn =' <a href="'.route('kecamatan.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
+                               $btn =' <a href="javascript:void(0)" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
                                $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" title="Hapus" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteKecamatan"><i class="metismenu-icon pe-7s-trash"></i></a>';
         
                                 return $btn;
@@ -36,7 +37,7 @@ class KecamatanController extends Controller
                         ->rawColumns(['action','jumlah'])
                         ->make(true);
             }
-            return view('kecamatan.index', compact('kab'));
+            return view('kecamatan.index', compact('kab','kabupaten'));
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -51,8 +52,16 @@ class KecamatanController extends Controller
     public function create()
     {
         if (Auth::user()->hasRole('admin')){
-            $kabupaten = Kabupaten::orderBy('nama')->get();
-            return view('kecamatan.create',compact('kabupaten'));
+            $kecamatan = Kecamatan::updateOrCreate(
+                ['id' => $request->kecamatan_id],
+                [
+                    'nama' => $request->nama,
+                    'kabupaten_id' => $request->kabupaten_id,
+                    'lat' => $request->lat,
+                    'long' => $request->long
+                ]
+            );
+            return response()->json($kecamatan);
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -68,9 +77,16 @@ class KecamatanController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->hasRole('admin')){
-            $kecamatan = Kecamatan::create($request->all());
-            $kabupaten = Kabupaten::find($request->get('kabupaten_id'));
-            return redirect()->route('kecamatan.show', $kabupaten)->with('sukses','Kecamatan Berhasil Disimpan');
+            $kecamatan = Kecamatan::updateOrCreate(
+                ['id' => $request->kecamatan_id],
+                [
+                    'nama' => $request->nama,
+                    'kabupaten_id' => $request->kabupaten_id,
+                    'lat' => $request->lat,
+                    'long' => $request->long
+                ]
+            );
+            return response()->json($kecamatan);
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -87,13 +103,14 @@ class KecamatanController extends Controller
     {
         if (Auth::user()->hasRole('admin')){
             $kab = Kabupaten::findOrFail($id);
+            $kabupaten = Kabupaten::pluck('nama','id');
             if ($request->ajax()) {
                 $data = Kecamatan::with('bumdes')->where('kabupaten_id', "$id")->orderBy('nama')->get();
                 return Datatables::of($data)
                         ->addIndexColumn()
                         ->addColumn('jumlah', function($data) {
-                            $btn = '<a href="'.route('bumdes.show', $data->id).'" data-toggle="tooltip" title="Lihat Bumdes" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan">Jumlah BUMDes, '.$data->bumdes->count().' Bumdes</a>';
-                            return $btn;
+                            $aa = '<a href="'.route('bumdes.show', $data->id).'" data-toggle="tooltip" title="Lihat Bumdes" data-id="'.$data->id.'" data-original-title="Edit" class="btn btn-info btn-sm">Jumlah BUMDes, '.$data->bumdes->count().' Bumdes</a>';
+                            return $aa;
                          })
                         ->addColumn('action', function($row){
                                $btn = ' <a href="'.route('kecamatan.edit', $row->id).'" data-toggle="tooltip" title="Edit" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm editKecamatan"><i class="metismenu-icon pe-7s-pen"></i></a>';
@@ -104,7 +121,7 @@ class KecamatanController extends Controller
                         ->rawColumns(['action','jumlah'])
                         ->make(true);
             }
-            return view('kecamatan.index',compact('kab'));
+            return view('kecamatan.index',compact('kab','kabupaten'));
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);
@@ -120,8 +137,8 @@ class KecamatanController extends Controller
     public function edit($id)
     {
         if (Auth::user()->hasRole('admin')){
-            $kecamatan = Kecamatan::findOrFail($id);
-            return view('kecamatan.edit',compact('kecamatan'));  
+            $kecamatan = Kecamatan::find($id);
+            return response()->json($kecamatan); 
         }
         else{
             return response()->view('errors.403', [abort(403)], 403);

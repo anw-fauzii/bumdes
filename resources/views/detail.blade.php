@@ -37,11 +37,6 @@
                                                     <th><span id="kontak"></span></th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Email</th>
-                                                    <th>:</th>
-                                                    <th><span id="email"></span></th>
-                                                </tr>
-                                                <tr>
                                                     <td>Titik Lokasi</td>
                                                     <td>:</td>
                                                     <td><span id="lat"></span> , <span id="long"></span></td>

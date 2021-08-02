@@ -101,6 +101,7 @@
                     <tr class="text-center">
                       <th>No</th>
                       <th>Nama Bumdes</th>
+                      <th>Email</th>
                       <th>Desa</th>
                       <th>Kecamatan</th>
                       <th>Jenis Usaha</th>
@@ -115,6 +116,7 @@
                     <tr>
                       <td>{{$no++}}</td>
                       <td>{{$row->nama}}</td>
+                      <td>{{$row->email}}</td>
                       <td>
                       @if($row->desa != NULL)
                       {{$row->desa}}

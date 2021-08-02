@@ -35,31 +35,25 @@
                 <li class="app-sidebar__heading">Menu Utama</li>
                 @role('admin')
                 <li>
-                    <a href="/">
-                        <i class="metismenu-icon pe-7s-home"></i>
-                            Beranda
-                    </a>
-                </li>   
-                <li>
-                    <a href="{{ route('bumdes.index') }}">
+                    <a href="{{ route('bumdes.index') }}" class="{{(request()->is('bumdes*')) ? 'mm-active' : ''}}">
                         <i class="metismenu-icon pe-7s-culture"></i>
                             Bumdes
                     </a>
                 </li>  
                 <li>
-                    <a href="{{ route('kabupaten.index') }}">
+                    <a href="{{ route('kabupaten.index') }}" class="{{(request()->is('kabupaten*')) ? 'mm-active' : ''}}">
                         <i class="metismenu-icon pe-7s-global"></i>
                             Kabupaten
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('kecamatan.index') }}">
+                    <a href="{{ route('kecamatan.index') }}" class="{{(request()->is('kecamatan*')) ? 'mm-active' : ''}}">
                         <i class="metismenu-icon pe-7s-flag"></i>
                             Kecamatan
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user.index') }}">
+                    <a href="{{ route('user.index') }}" class="{{(request()->is('user*')) ? 'mm-active' : ''}}">
                         <i class="metismenu-icon pe-7s-users"></i>
                             Akun
                     </a>
@@ -67,26 +61,20 @@
                 @endrole 
                 @role('bumdes')
                 <li>
-                    <a href="/">
-                        <i class="metismenu-icon pe-7s-home"></i>
-                            Beranda
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('jenisUsaha.index') }}">
+                    <a href="{{ route('jenisUsaha.index') }}" class="{{(request()->is('jenisUsaha')) ? 'mm-active' : ''}}">
                         <i class="metismenu-icon pe-7s-server"></i>
                             Jenis Usaha dan SHU
                     </a>
                 </li>   
                 <li>
-                    <a href="{{ route('profil')}}">
+                    <a href="{{ route('profil')}}" class="{{(request()->is('profil*') || request()->is('bumdes*')) ? 'mm-active' : ''}}">
                         <i class="metismenu-icon pe-7s-user"></i>
                             Profil
                     </a>
                 </li>
                 @endrole
                 <li>
-                    <a href="{{ route('tentang') }}">
+                    <a href="{{ route('tentang') }}" class="{{(request()->is('tentang')) ? 'mm-active' : ''}}">
                         <i class="metismenu-icon pe-7s-info"></i>
                             Tentang
                     </a>
